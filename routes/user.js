@@ -1,0 +1,18 @@
+const Controller = require("../controller/user");
+const authentication = require("../middleware/authentication");
+
+const userRouter = require("express").Router();
+
+userRouter.get("/", authentication, Controller.getAllUser);
+
+userRouter.get("/:id", authentication, Controller.getOneUser);
+
+userRouter.post("/register", Controller.register);
+
+userRouter.post("/login", Controller.login);
+
+userRouter.patch("/:id", authentication, Controller.updateUser);
+
+userRouter.delete("/:id", authentication, Controller.deleteUser);
+
+module.exports = userRouter;
