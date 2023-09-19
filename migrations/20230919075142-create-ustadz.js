@@ -8,7 +8,7 @@ module.exports = {
     queryInterface.sequelize.query(
       'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";'
     );
-    await queryInterface.createTable("PengajarTahsins", {
+    await queryInterface.createTable("Ustadzs", {
       id: {
         allowNull: true,
         unique: true,
@@ -23,7 +23,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       alamat: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
       },
       pekerjaan: {
         type: Sequelize.STRING,
@@ -46,6 +46,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("PengajarTahsins");
+    await queryInterface.dropTable("Ustadzs");
   },
 };
