@@ -36,6 +36,7 @@ module.exports = {
       },
       baca_quran: {
         type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       status_aktif: {
         type: Sequelize.BOOLEAN,

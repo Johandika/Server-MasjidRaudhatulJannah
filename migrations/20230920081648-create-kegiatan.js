@@ -8,7 +8,7 @@ module.exports = {
     queryInterface.sequelize.query(
       'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";'
     );
-    await queryInterface.createTable("DokumentasiKegiatanDevisis", {
+    await queryInterface.createTable("Kegiatans", {
       id: {
         allowNull: true,
         unique: true,
@@ -16,13 +16,34 @@ module.exports = {
         type: DataTypes.UUID,
         defaultValue: Sequelize.literal("uuid_generate_v4()"),
       },
-      dokumentasi_kegiatan_devisi: {
+      tema: {
         type: Sequelize.STRING,
       },
-      KegiatanDevisiId: {
+      penanggung_jawab: {
+        type: Sequelize.STRING,
+      },
+      waktu: {
+        type: Sequelize.DATE,
+      },
+      lokasi: {
+        type: Sequelize.STRING,
+      },
+      cover_image: {
+        type: Sequelize.STRING,
+      },
+      catatan: {
+        type: Sequelize.TEXT,
+      },
+      deskripsi: {
+        type: Sequelize.TEXT,
+      },
+      link: {
+        type: Sequelize.TEXT,
+      },
+      DivisiId: {
         type: Sequelize.UUID,
         references: {
-          model: "KegiatanDivisis",
+          model: "Divisis",
           key: "id",
         },
         onDelete: "cascade",
@@ -39,6 +60,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("DokumentasiKegiatanDevisis");
+    await queryInterface.dropTable("Kegiatans");
   },
 };

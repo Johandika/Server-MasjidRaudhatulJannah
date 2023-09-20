@@ -16,14 +16,8 @@ module.exports = {
         type: DataTypes.UUID,
         defaultValue: Sequelize.literal("uuid_generate_v4()"),
       },
-      HariId: {
-        type: Sequelize.UUID,
-        references: {
-          model: "Haris",
-          key: "id",
-        },
-        onDelete: "cascade",
-        onUpdate: "cascade",
+      hari: {
+        type: Sequelize.STRING,
       },
       KelasTahsinDewasaId: {
         type: Sequelize.UUID,
@@ -43,10 +37,10 @@ module.exports = {
         onDelete: "cascade",
         onUpdate: "cascade",
       },
-      KajianRutinId: {
+      KajianId: {
         type: Sequelize.UUID,
         references: {
-          model: "KajianRutins",
+          model: "Kajians",
           key: "id",
         },
         onDelete: "cascade",

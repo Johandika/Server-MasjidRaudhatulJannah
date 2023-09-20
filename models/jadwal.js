@@ -20,10 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: Sequelize.literal("uuid_generate_v4()"),
       },
-      HariId: DataTypes.UUID,
+      hari: DataTypes.STRING,
       KelasTahsinDewasaId: DataTypes.UUID,
       KelasTahsinAnak: DataTypes.UUID,
-      KajianRutinId: DataTypes.UUID,
+      KajianId: DataTypes.UUID,
     },
     {
       sequelize,

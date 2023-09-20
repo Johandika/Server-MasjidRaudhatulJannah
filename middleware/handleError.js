@@ -45,9 +45,9 @@ const handleError = (err, req, res, next) => {
   } else if (err.name === "Id Divisi Tidak Ditemukan") {
     code = 404;
     message = "Id Divisi Tidak Ditemukan";
-  } else if (err.name === "Id Kajian Rutin Tidak Ditemukan") {
+  } else if (err.name === "Id Kajian Tidak Ditemukan") {
     code = 404;
-    message = "Id Kajian Rutin Tidak Ditemukan";
+    message = "Id Kajian Tidak Ditemukan";
   }
 
   // 401

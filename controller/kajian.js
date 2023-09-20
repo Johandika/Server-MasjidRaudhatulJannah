@@ -1,4 +1,4 @@
-const { KajianRutin, kategoriKajian } = require("../models");
+const { Kajian, kategoriKajian } = require("../models");
 
 class Controller {
   // GET ALL
@@ -38,15 +38,15 @@ class Controller {
         };
       }
 
-      let dataKajianRutin = await KajianRutin.findAndCountAll(pagination);
+      let dataKajian = await Kajian.findAndCountAll(pagination);
 
-      let totalPage = Math.ceil(dataKajianRutin.count / (limit ? limit : 50));
+      let totalPage = Math.ceil(dataKajian.count / (limit ? limit : 50));
 
       res.status(200).json({
         statusCode: 200,
-        message: "Berhasil Mendapatkan Semua Data KajianRutin",
-        data: dataKajianRutin.rows,
-        totaldataKajianRutin: dataKajianRutin.count,
+        message: "Berhasil Mendapatkan Semua Data Kajian",
+        data: dataKajian.rows,
+        totaldataKajian: dataKajian.count,
         totalPage: totalPage,
       });
     } catch (error) {
@@ -59,20 +59,20 @@ class Controller {
     try {
       const { id } = req.params;
 
-      const dataKajianRutin = await KajianRutin.findOne({
+      const dataKajian = await Kajian.findOne({
         where: {
           id,
         },
       });
 
-      if (!dataKajianRutin) {
-        throw { name: "Id Kajian Rutin Tidak Ditemukan" };
+      if (!dataKajian) {
+        throw { name: "Id Kajian Tidak Ditemukan" };
       }
 
       res.status(200).json({
         statusCode: 200,
-        message: "Berhasil Menampilkan Data KajianRutin",
-        data: dataKajianRutin,
+        message: "Berhasil Menampilkan Data Kajian",
+        data: dataKajian,
       });
     } catch (error) {
       next(error);
@@ -103,12 +103,12 @@ class Controller {
           body.kategoriKajianId = kategoriKajianId;
         }
       }
-      const dataKajianRutin = await KajianRutin.create(body);
+      const dataKajian = await Kajian.create(body);
 
       res.status(200).json({
         statusCode: 200,
-        message: "Berhasil Menambahkan Data KajianRutin " + tema,
-        data: dataKajianRutin,
+        message: "Berhasil Menambahkan Data Kajian " + tema,
+        data: dataKajian,
       });
     } catch (error) {
       next(error);
@@ -121,14 +121,14 @@ class Controller {
       const { id } = req.params;
       const { nama_ustadz, tema, catatan, kategoriKajianId } = req.body;
 
-      const dataKajianRutin = await KajianRutin.findOne({
+      const dataKajian = await Kajian.findOne({
         where: {
           id,
         },
       });
 
-      if (!dataKajianRutin) {
-        throw { name: "Id Kajian Rutin Tidak Ditemukan" };
+      if (!dataKajian) {
+        throw { name: "Id Kajian Tidak Ditemukan" };
       }
 
       let body = {
@@ -151,7 +151,7 @@ class Controller {
         }
       }
 
-      await KajianRutin.update(body, {
+      await Kajian.update(body, {
         where: {
           id,
         },
@@ -159,7 +159,7 @@ class Controller {
 
       res.status(200).json({
         statusCode: 200,
-        message: "Berhasil Memperbaharui Data KajianRutin",
+        message: "Berhasil Memperbaharui Data Kajian",
       });
     } catch (error) {
       next(error);
@@ -171,17 +171,17 @@ class Controller {
     try {
       const { id } = req.params;
 
-      const dataKajianRutin = await KajianRutin.findOne({
+      const dataKajian = await Kajian.findOne({
         where: {
           id,
         },
       });
 
-      if (!dataKajianRutin) {
-        throw { name: "Id Kajian Rutin Tidak Ditemukan" };
+      if (!dataKajian) {
+        throw { name: "Id Kajian Tidak Ditemukan" };
       }
 
-      await KajianRutin.destroy({
+      await Kajian.destroy({
         where: {
           id,
         },
@@ -189,7 +189,7 @@ class Controller {
 
       res.status(200).json({
         statusCode: 200,
-        message: "Berhasil Menghapus Data KajianRutin",
+        message: "Berhasil Menghapus Data Kajian",
       });
     } catch (error) {
       next(error);
