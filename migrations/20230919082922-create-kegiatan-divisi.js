@@ -31,6 +31,9 @@ module.exports = {
       cover_image: {
         type: Sequelize.STRING,
       },
+      DivisiId: {
+        type: Sequelize.UUID,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

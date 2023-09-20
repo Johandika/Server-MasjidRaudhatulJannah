@@ -1,5 +1,5 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, Sequelize } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Jadwal extends Model {
     /**
@@ -13,6 +13,13 @@ module.exports = (sequelize, DataTypes) => {
   }
   Jadwal.init(
     {
+      id: {
+        allowNull: true,
+        unique: true,
+        primaryKey: true,
+        type: DataTypes.UUID,
+        defaultValue: Sequelize.literal("uuid_generate_v4()"),
+      },
       HariId: DataTypes.UUID,
       KelasTahsinDewasaId: DataTypes.UUID,
       KelasTahsinAnak: DataTypes.UUID,
