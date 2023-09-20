@@ -48,6 +48,64 @@ const handleError = (err, req, res, next) => {
   } else if (err.name === "Id Kajian Tidak Ditemukan") {
     code = 404;
     message = "Id Kajian Tidak Ditemukan";
+  } else if (err.name === "Id Kategori Kajian Tidak Ditemukan") {
+    code = 404;
+    message = "Id Kategori Kajian Tidak Ditemukan";
+  } 
+  else if (err.name === "Id Ustadz Tidak Ditemukan") {
+    code = 404;
+    message = "Id Ustadz Tidak Ditemukan";
+  } 
+  else if (err.name === "Id Kegiatan Tidak Ditemukan") {
+    code = 404;
+    message = "Id Kegiatan Tidak Ditemukan";
+  } else if (err.name === "Id Kelas Tahsin Anak Tidak Ditemukan") {
+    code = 404;
+    message = "Id Kelas Tahsin Anak Tidak Ditemukan";
+  } else if (err.name === "Id Kelas Tahsin Dewasa Tidak Ditemukan") {
+    code = 404;
+    message = "Id Kelas Tahsin Dewasa Tidak Ditemukan";
+  } else if (err.name === "Id Pengajar Tahsin Tidak Ditemukan") {
+    code = 404;
+    message = "Id Pengajar Tahsin Tidak Ditemukan";
+  } else if (err.name === "Id Peserta Tahsin Anak Tidak Ditemukan") {
+    code = 404;
+    message = "Id Peserta Tahsin Anak Tidak Ditemukan";
+  } else if (err.name === "Id Peserta Tahsin Dewasa Tidak Ditemukan") {
+    code = 404;
+    message = "Id Peserta Tahsin Dewasa Tidak Ditemukan";
+  } else if (err.name === "Id Rekening Donasi Tidak Ditemukan") {
+    code = 404;
+    message = "Id Rekening Donasi Tidak Ditemukan";
+  }
+  //
+  else if (err.name === "Id Ustadz Tidak Ditemukan") {
+    code = 404;
+    message = "Id Ustadz Tidak Ditemukan";
+  } else if (err.name === "Id Ustadz Tidak Ditemukan") {
+    code = 404;
+    message = "Id Ustadz Tidak Ditemukan";
+  } else if (err.name === "Id Ustadz Tidak Ditemukan") {
+    code = 404;
+    message = "Id Ustadz Tidak Ditemukan";
+  } else if (err.name === "Id Ustadz Tidak Ditemukan") {
+    code = 404;
+    message = "Id Ustadz Tidak Ditemukan";
+  } else if (err.name === "Id Ustadz Tidak Ditemukan") {
+    code = 404;
+    message = "Id Ustadz Tidak Ditemukan";
+  } else if (err.name === "Id Ustadz Tidak Ditemukan") {
+    code = 404;
+    message = "Id Ustadz Tidak Ditemukan";
+  } else if (err.name === "Id Ustadz Tidak Ditemukan") {
+    code = 404;
+    message = "Id Ustadz Tidak Ditemukan";
+  } else if (err.name === "Id Ustadz Tidak Ditemukan") {
+    code = 404;
+    message = "Id Ustadz Tidak Ditemukan";
+  } else if (err.name === "Id Ustadz Tidak Ditemukan") {
+    code = 404;
+    message = "Id Ustadz Tidak Ditemukan";
   }
 
   // 401

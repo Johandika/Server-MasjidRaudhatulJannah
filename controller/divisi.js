@@ -1,3 +1,4 @@
+const formatPhoneNumber = require("../helper/formatPhoneNumber");
 const { Divisi } = require("../models");
 
 class Controller {
@@ -86,7 +87,7 @@ class Controller {
       const dataDivisi = await Divisi.create({
         nama,
         penanggung_jawab,
-        telepon,
+        telepon: formatPhoneNumber(telepon),
         deskripsi,
         catatan,
       });
@@ -128,7 +129,7 @@ class Controller {
         {
           nama,
           penanggung_jawab,
-          telepon,
+          telepon: formatPhoneNumber(telepon),
           deskripsi,
           catatan,
           status_aktif,

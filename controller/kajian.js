@@ -22,7 +22,9 @@ class Controller {
       if (search) {
         pagination.where = {
           [Op.or]: [
+            { tipe: { [Op.iLike]: `%${search}%` } },
             { nama_ustadz: { [Op.iLike]: `%${search}%` } },
+            { nama_penerjemah: { [Op.iLike]: `%${search}%` } },
             { tema: { [Op.iLike]: `%${search}%` } },
           ],
         };
@@ -82,12 +84,28 @@ class Controller {
   // CREATE
   static async craete(req, res, next) {
     try {
-      const { nama_ustadz, tema, catatan, kategoriKajianId } = req.body;
-
-      let body = {
+      const {
+        tipe,
         nama_ustadz,
+        nama_penerjemah,
+        waktu,
         tema,
         catatan,
+        informasi,
+        link,
+        UstadzId,
+        kategoriKajianId,
+      } = req.body;
+
+      let body = {
+        tipe,
+        nama_ustadz,
+        nama_penerjemah,
+        waktu,
+        tema,
+        catatan,
+        informasi,
+        link,
       };
 
       if (kategoriKajianId) {
@@ -103,6 +121,21 @@ class Controller {
           body.kategoriKajianId = kategoriKajianId;
         }
       }
+
+      if (UstadzId) {
+        const data = await Ustadz.findOne({
+          where: {
+            id: UstadzId,
+          },
+        });
+
+        if (!data) {
+          throw { name: "Id Ustadz Tidak Ditemukan" };
+        } else {
+          body.UstadzId = UstadzId;
+        }
+      }
+
       const dataKajian = await Kajian.create(body);
 
       res.status(200).json({
@@ -119,7 +152,19 @@ class Controller {
   static async update(req, res, next) {
     try {
       const { id } = req.params;
-      const { nama_ustadz, tema, catatan, kategoriKajianId } = req.body;
+      const {
+        tipe,
+        nama_ustadz,
+        nama_penerjemah,
+        waktu,
+        tema,
+        catatan,
+        informasi,
+        link,
+        status_aktif,
+        UstadzId,
+        kategoriKajianId,
+      } = req.body;
 
       const dataKajian = await Kajian.findOne({
         where: {
@@ -132,9 +177,15 @@ class Controller {
       }
 
       let body = {
+        tipe,
         nama_ustadz,
+        nama_penerjemah,
+        waktu,
         tema,
         catatan,
+        informasi,
+        link,
+        status_aktif,
       };
 
       if (kategoriKajianId) {
@@ -148,6 +199,20 @@ class Controller {
           throw { name: "Id Kategori Kajian Tidak Ditemukan" };
         } else {
           body.kategoriKajianId = kategoriKajianId;
+        }
+      }
+
+      if (UstadzId) {
+        const data = await Ustadz.findOne({
+          where: {
+            id: UstadzId,
+          },
+        });
+
+        if (!data) {
+          throw { name: "Id Ustadz Tidak Ditemukan" };
+        } else {
+          body.UstadzId = UstadzId;
         }
       }
 
