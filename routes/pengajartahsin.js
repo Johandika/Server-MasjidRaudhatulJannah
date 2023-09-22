@@ -7,7 +7,7 @@ pengajartahsinRouter.get("/", authentication, Controller.getAll);
 
 pengajartahsinRouter.get("/:id", authentication, Controller.getOne);
 
-pengajartahsinRouter.post("/:id", authentication, Controller.craete);
+pengajartahsinRouter.post("/", authentication, Controller.craete);
 
 pengajartahsinRouter.patch("/:id", authentication, Controller.update);
 

@@ -142,11 +142,11 @@ class Controller {
 
       const authorization = createAccessToken(payload);
 
-      res.status(201).json({
-        statusCode: 201,
-        message: "Selamat Datang" + dataUser.username,
+      res.status(200).json({
+        statusCode: 200,
+        message: "Selamat Datang " + dataUser.username,
         authorization: authorization,
-        name: dataUser.username,
+        username: dataUser.username,
         email: dataUser.email,
       });
     } catch (error) {
