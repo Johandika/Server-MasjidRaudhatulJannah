@@ -1,0 +1,16 @@
+[
+  {
+    "username": "Alex Chandra Hanif",
+    "email": "alex@gmail.com",
+    "password": "12345",
+    "role": "Admin",
+    "telepon": "082388197372"
+  },
+  {
+    "username": "Johandika",
+    "email": "johan@gmail.com",
+    "password": "12345",
+    "role": "Admin",
+    "telepon": "082370323310"
+  }
+]
