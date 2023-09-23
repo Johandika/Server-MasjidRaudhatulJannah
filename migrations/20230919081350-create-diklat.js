@@ -34,6 +34,13 @@ module.exports = {
       kuota: {
         type: Sequelize.INTEGER,
       },
+      poster_diklat: {
+        type: Sequelize.STRING,
+      },
+      status_aktif: {
+        type: Sequelize.BOOLEAN,
+        dialectTypes: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

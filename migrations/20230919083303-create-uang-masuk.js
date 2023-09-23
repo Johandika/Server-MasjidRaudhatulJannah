@@ -17,7 +17,7 @@ module.exports = {
         defaultValue: Sequelize.literal("uuid_generate_v4()"),
       },
       total: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
       },
       waktu: {
         type: Sequelize.DATE,

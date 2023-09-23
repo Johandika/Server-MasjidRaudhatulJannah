@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   UangKeluar.init(
     {
-      total: DataTypes.INTEGER,
+      total: DataTypes.FLOAT,
       waktu: DataTypes.DATE,
       keterangan: DataTypes.TEXT,
       informasi: DataTypes.TEXT,

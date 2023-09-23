@@ -40,6 +40,14 @@ module.exports = {
       link: {
         type: Sequelize.TEXT,
       },
+      headline: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+      status_aktif: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true,
+      },
       DivisiId: {
         type: Sequelize.UUID,
         references: {

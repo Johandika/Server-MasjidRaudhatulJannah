@@ -43,6 +43,9 @@ module.exports = {
       link: {
         type: Sequelize.TEXT,
       },
+      poster_kajian: {
+        type: Sequelize.STRING,
+      },
       KategoriKajianId: {
         type: Sequelize.UUID,
         references: {
