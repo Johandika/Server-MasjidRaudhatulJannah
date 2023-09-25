@@ -31,15 +31,6 @@ module.exports = {
         onDelete: "cascade",
         onUpdate: "cascade",
       },
-      PesertaTahsinAnakId: {
-        type: Sequelize.UUID,
-        references: {
-          model: "PesertaTahsinAnaks",
-          key: "id",
-        },
-        onDelete: "cascade",
-        onUpdate: "cascade",
-      },
       status_aktif: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,

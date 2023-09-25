@@ -1,5 +1,5 @@
 const formatPhoneNumber = require("../helper/formatPhoneNumber");
-const { Ustadz } = require("../models");
+const { Ustadz, Kajian, KategoriKajian, Jadwal } = require("../models");
 
 class Controller {
   // GET ALL
@@ -8,7 +8,19 @@ class Controller {
       const { limit, page, search, tanggal, status } = req.query;
 
       let pagination = {
-        include: [],
+        include: [
+          {
+            model: Kajian,
+            include: [
+              {
+                model: KategoriKajian,
+              },
+              {
+                model: Jadwal,
+              },
+            ],
+          },
+        ],
         order: [["createdAt", "DESC"]],
       };
 
@@ -64,6 +76,19 @@ class Controller {
         where: {
           id,
         },
+        include: [
+          {
+            model: Kajian,
+            include: [
+              {
+                model: KategoriKajian,
+              },
+              {
+                model: Jadwal,
+              },
+            ],
+          },
+        ],
       });
 
       if (!dataUstadz) {

@@ -1,5 +1,9 @@
 const formatPhoneNumber = require("../helper/formatPhoneNumber");
-const { comparePassword, createAccessToken } = require("../helper/helper");
+const {
+  comparePassword,
+  createAccessToken,
+  hashingPassword,
+} = require("../helper/helper");
 const { User } = require("../models");
 
 class Controller {
@@ -13,7 +17,7 @@ class Controller {
         attributes: {
           exclude: ["password"],
         },
-        order: [["createdAt", "DESC"]],
+        order: [["username", "ASC"]],
       };
 
       if (limit) {
@@ -185,7 +189,7 @@ class Controller {
       let body = {
         username,
         email,
-        password,
+        password: hashingPassword(password),
         telepon: formatPhoneNumber(telepon),
       };
 

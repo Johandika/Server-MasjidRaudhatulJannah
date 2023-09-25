@@ -35,6 +35,15 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
       },
+      KelasTahsinDewasaId: {
+        type: Sequelize.UUID,
+        references: {
+          model: "KelasTahsinDewasas",
+          key: "id",
+        },
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

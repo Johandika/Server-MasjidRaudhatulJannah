@@ -2,13 +2,18 @@
 const { Model, Sequelize } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Jadwal extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Jadwal.belongsTo(models.KelasTahsinDewasa, {
+        foreignKey: "KelasTahsinDewasaId",
+      });
+
+      Jadwal.belongsTo(models.KelasTahsinAnak, {
+        foreignKey: "KelasTahsinAnakId",
+      });
+
+      Jadwal.belongsTo(models.Kajian, {
+        foreignKey: "KajianId",
+      });
     }
   }
   Jadwal.init(
@@ -22,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       hari: DataTypes.STRING,
       KelasTahsinDewasaId: DataTypes.UUID,
-      KelasTahsinAnak: DataTypes.UUID,
+      KelasTahsinAnakId: DataTypes.UUID,
       KajianId: DataTypes.UUID,
     },
     {

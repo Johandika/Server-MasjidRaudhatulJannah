@@ -28,7 +28,7 @@ module.exports = {
         onDelete: "cascade",
         onUpdate: "cascade",
       },
-      KelasTahsinAnak: {
+      KelasTahsinAnakId: {
         type: Sequelize.UUID,
         references: {
           model: "KelasTahsinAnaks",

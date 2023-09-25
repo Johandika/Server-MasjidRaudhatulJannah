@@ -1,4 +1,4 @@
-const { KategoriKajian } = require("../models");
+const { KategoriKajian, Kajian, Jadwal, Ustadz } = require("../models");
 
 class Controller {
   // GET ALL
@@ -7,8 +7,20 @@ class Controller {
       const { limit, page, search, tanggal, status } = req.query;
 
       let pagination = {
-        include: [],
-        order: [["createdAt", "DESC"]],
+        include: [
+          {
+            model: Kajian,
+            include: [
+              {
+                model: Jadwal,
+              },
+              {
+                model: Ustadz,
+              },
+            ],
+          },
+        ],
+        order: [["nama", "ASC"]],
       };
 
       if (limit) {
@@ -62,6 +74,19 @@ class Controller {
         where: {
           id,
         },
+        include: [
+          {
+            model: Kajian,
+            include: [
+              {
+                model: Jadwal,
+              },
+              {
+                model: Ustadz,
+              },
+            ],
+          },
+        ],
       });
 
       if (!dataKategoriKajian) {
@@ -90,8 +115,8 @@ class Controller {
 
       const dataKategoriKajian = await KategoriKajian.create(body);
 
-      res.status(200).json({
-        statusCode: 200,
+      res.status(201).json({
+        statusCode: 201,
         message: "Berhasil Menambahkan Data Kategori Kajian",
         data: dataKategoriKajian,
       });

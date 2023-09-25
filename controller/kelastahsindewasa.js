@@ -2,6 +2,7 @@ const {
   KelasTahsinDewasa,
   PengajarTahsin,
   PesertaTahsinDewasa,
+  Jadwal,
 } = require("../models");
 
 class Controller {
@@ -11,7 +12,14 @@ class Controller {
       const { limit, page, search, tanggal, status } = req.query;
 
       let pagination = {
-        include: [],
+        include: [
+          {
+            model: PengajarTahsin,
+          },
+          {
+            model: Jadwal,
+          },
+        ],
         order: [["createdAt", "DESC"]],
       };
 
@@ -68,6 +76,14 @@ class Controller {
         where: {
           id,
         },
+        include: [
+          {
+            model: PengajarTahsin,
+          },
+          {
+            model: Jadwal,
+          },
+        ],
       });
 
       if (!dataKelasTahsinDewasa) {
@@ -87,8 +103,7 @@ class Controller {
   // CREATE
   static async craete(req, res, next) {
     try {
-      const { kelas, catatan, kuota, PengajarTahsinId, PesertaTahsinDewasaId } =
-        req.body;
+      const { kelas, hari, catatan, kuota, PengajarTahsinId } = req.body;
 
       let body = {
         kelas,
@@ -105,29 +120,19 @@ class Controller {
 
         if (!data) {
           throw { name: "Id Pengajar Tahsin Tidak Ditemukan" };
-        } else {
-          body.PengajarTahsinId = PengajarTahsinId;
         }
-      }
-
-      if (PesertaTahsinDewasaId) {
-        const data = await PesertaTahsinDewasa.findOne({
-          where: {
-            id: PesertaTahsinDewasaId,
-          },
-        });
-
-        if (!data) {
-          throw { name: "Id Peserta Tahsin Dewasa Tidak Ditemukan" };
-        } else {
-          body.PesertaTahsinDewasaId = PesertaTahsinDewasaId;
-        }
+        body.PengajarTahsinId = PengajarTahsinId;
       }
 
       const dataKelasTahsinDewasa = await KelasTahsinDewasa.create(body);
 
-      res.status(200).json({
-        statusCode: 200,
+      const dataJadwal = await Jadwal.create({
+        hari,
+        KelasTahsinDewasaId: dataKelasTahsinDewasa.id,
+      });
+
+      res.status(201).json({
+        statusCode: 201,
         message: "Berhasil Menambahkan Data Kelas Tahsin Dewasa",
         data: dataKelasTahsinDewasa,
       });

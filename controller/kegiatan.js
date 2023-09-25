@@ -121,8 +121,8 @@ class Controller {
 
       const dataKegiatan = await Kegiatan.create(body);
 
-      res.status(200).json({
-        statusCode: 200,
+      res.status(201).json({
+        statusCode: 201,
         message: "Berhasil Menambahkan Data Kegiatan",
         data: dataKegiatan,
       });

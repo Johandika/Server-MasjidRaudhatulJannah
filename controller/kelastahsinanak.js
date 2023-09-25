@@ -2,6 +2,7 @@ const {
   KelasTahsinAnak,
   PengajarTahsin,
   PesertaTahsinAnak,
+  Jadwal,
 } = require("../models");
 
 class Controller {
@@ -11,7 +12,14 @@ class Controller {
       const { limit, page, search, tanggal, status } = req.query;
 
       let pagination = {
-        include: [],
+        include: [
+          {
+            model: PengajarTahsin,
+          },
+          {
+            model: Jadwal,
+          },
+        ],
         order: [["createdAt", "DESC"]],
       };
 
@@ -68,6 +76,14 @@ class Controller {
         where: {
           id,
         },
+        include: [
+          {
+            model: PengajarTahsin,
+          },
+          {
+            model: Jadwal,
+          },
+        ],
       });
 
       if (!dataKelasTahsinAnak) {
@@ -87,8 +103,7 @@ class Controller {
   // CREATE
   static async craete(req, res, next) {
     try {
-      const { kelas, catatan, kuota, PengajarTahsinId, PesertaTahsinAnakId } =
-        req.body;
+      const { kelas, hari, catatan, kuota, PengajarTahsinId } = req.body;
 
       let body = {
         kelas,
@@ -110,24 +125,15 @@ class Controller {
         }
       }
 
-      if (PesertaTahsinAnakId) {
-        const data = await PesertaTahsinAnak.findOne({
-          where: {
-            id: PesertaTahsinAnakId,
-          },
-        });
-
-        if (!data) {
-          throw { name: "Id Peserta Tahsin Anak Tidak Ditemukan" };
-        } else {
-          body.PesertaTahsinAnakId = PesertaTahsinAnakId;
-        }
-      }
-
       const dataKelasTahsinAnak = await KelasTahsinAnak.create(body);
 
-      res.status(200).json({
-        statusCode: 200,
+      const dataJadwal = await Jadwal.create({
+        hari,
+        KelasTahsinAnakId: dataKelasTahsinAnak.id,
+      });
+
+      res.status(201).json({
+        statusCode: 201,
         message: "Berhasil Menambahkan Data Kelas Tahsin Anak",
         data: dataKelasTahsinAnak,
       });

@@ -8,6 +8,12 @@ const upload = () => {
       if (file.fieldname === "photoUser") {
         cb(null, `./upload/photoUser/`);
       }
+      if (file.fieldname === "poster_kajian") {
+        cb(null, `./upload/poster_kajian/`);
+      }
+      if (file.fieldname === "poster_diklat") {
+        cb(null, `./upload/poster_diklat/`);
+      }
     },
     filename: function (req, file, cb) {
       const tanggal = new Date().getTime().toString();

@@ -1,5 +1,10 @@
 const formatPhoneNumber = require("../helper/formatPhoneNumber");
-const { PesertaTahsinAnak } = require("../models");
+const {
+  PesertaTahsinAnak,
+  KelasTahsinAnak,
+  Jadwal,
+  PengajarTahsin,
+} = require("../models");
 
 class Controller {
   // GET ALL
@@ -8,7 +13,19 @@ class Controller {
       const { limit, page, search, tanggal, status } = req.query;
 
       let pagination = {
-        include: [],
+        include: [
+          {
+            model: KelasTahsinAnak,
+            include: [
+              {
+                model: PengajarTahsin,
+              },
+              {
+                model: Jadwal,
+              },
+            ],
+          },
+        ],
         order: [["createdAt", "DESC"]],
       };
 
@@ -70,6 +87,19 @@ class Controller {
         where: {
           id,
         },
+        include: [
+          {
+            model: KelasTahsinAnak,
+            include: [
+              {
+                model: PengajarTahsin,
+              },
+              {
+                model: Jadwal,
+              },
+            ],
+          },
+        ],
       });
 
       if (!dataPesertaTahsinAnak) {
@@ -97,6 +127,7 @@ class Controller {
         telepon,
         alamat,
         baca_quran,
+        KelasTahsinAnakId,
       } = req.body;
 
       let body = {
@@ -109,10 +140,25 @@ class Controller {
         baca_quran,
       };
 
+      if (KelasTahsinAnakId) {
+        const data = await KelasTahsinAnak.findOne({
+          where: {
+            id: KelasTahsinAnakId,
+            status_aktif: true,
+          },
+        });
+
+        if (!data) {
+          throw { name: "Id Kelas Tahsin Anak Tidak Ditemukan" };
+        }
+
+        body.KelasTahsinAnakId = KelasTahsinAnakId;
+      }
+
       const dataPesertaTahsinAnak = await PesertaTahsinAnak.create(body);
 
-      res.status(200).json({
-        statusCode: 200,
+      res.status(201).json({
+        statusCode: 201,
         message: "Berhasil Menambahkan Data Peserta Tahsin Anak",
         data: dataPesertaTahsinAnak,
       });
@@ -125,7 +171,16 @@ class Controller {
   static async update(req, res, next) {
     try {
       const { id } = req.params;
-      const { nama, telepon, alamat, pekerjaan, umur, status_aktif } = req.body;
+      const {
+        nama_ayah,
+        nama_ibu,
+        nama_anak,
+        umur_anak,
+        telepon,
+        alamat,
+        baca_quran,
+        status_aktif,
+      } = req.body;
 
       const dataPesertaTahsinAnak = await PesertaTahsinAnak.findOne({
         where: {
@@ -138,13 +193,30 @@ class Controller {
       }
 
       let body = {
-        nama,
+        nama_ayah,
+        nama_ibu,
+        nama_Anak,
+        umur_Anak,
         telepon: formatPhoneNumber(telepon),
         alamat,
-        pekerjaan,
-        umur,
+        baca_quran,
         status_aktif,
       };
+
+      if (KelasTahsinAnakId) {
+        const data = await KelasTahsinAnak.findOne({
+          where: {
+            id: KelasTahsinAnakId,
+            status_aktif: true,
+          },
+        });
+
+        if (!data) {
+          throw { name: "Id Kelas Tahsin Anak Tidak Ditemukan" };
+        }
+
+        body.KelasTahsinAnakId = KelasTahsinAnakId;
+      }
 
       await PesertaTahsinAnak.update(body, {
         where: {

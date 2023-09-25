@@ -1,5 +1,10 @@
 const formatPhoneNumber = require("../helper/formatPhoneNumber");
-const { PesertaTahsinDewasa } = require("../models");
+const {
+  PesertaTahsinDewasa,
+  KelasTahsinDewasa,
+  PengajarTahsin,
+  Jadwal,
+} = require("../models");
 
 class Controller {
   // GET ALL
@@ -8,7 +13,19 @@ class Controller {
       const { limit, page, search, tanggal, status } = req.query;
 
       let pagination = {
-        include: [],
+        include: [
+          {
+            model: KelasTahsinDewasa,
+            include: [
+              {
+                model: PengajarTahsin,
+              },
+              {
+                model: Jadwal,
+              },
+            ],
+          },
+        ],
         order: [["createdAt", "DESC"]],
       };
 
@@ -68,6 +85,19 @@ class Controller {
         where: {
           id,
         },
+        include: [
+          {
+            model: KelasTahsinDewasa,
+            include: [
+              {
+                model: PengajarTahsin,
+              },
+              {
+                model: Jadwal,
+              },
+            ],
+          },
+        ],
       });
 
       if (!dataPesertaTahsinDewasa) {
@@ -87,7 +117,8 @@ class Controller {
   // CREATE
   static async craete(req, res, next) {
     try {
-      const { nama, telepon, alamat, pekerjaan, umur } = req.body;
+      const { nama, telepon, alamat, pekerjaan, umur, KelasTahsinDewasaId } =
+        req.body;
 
       let body = {
         nama,
@@ -96,6 +127,21 @@ class Controller {
         pekerjaan,
         umur,
       };
+
+      if (KelasTahsinDewasaId) {
+        const data = await KelasTahsinDewasa.findOne({
+          where: {
+            id: KelasTahsinDewasaId,
+            status_aktif: true,
+          },
+        });
+
+        if (!data) {
+          throw { name: "Id Kelas Tahsin Dewasa Tidak Ditemukan" };
+        }
+
+        body.KelasTahsinDewasaId = KelasTahsinDewasaId;
+      }
 
       const dataPesertaTahsinDewasa = await PesertaTahsinDewasa.create(body);
 
@@ -114,13 +160,12 @@ class Controller {
     try {
       const { id } = req.params;
       const {
-        nama_ayah,
-        nama_ibu,
-        nama_Dewasa,
-        umur_Dewasa,
+        nama,
         telepon,
         alamat,
-        baca_quran,
+        pekerjaan,
+        umur,
+        KelasTahsinDewasaId,
         status_aktif,
       } = req.body;
 
@@ -135,15 +180,27 @@ class Controller {
       }
 
       let body = {
-        nama_ayah,
-        nama_ibu,
-        nama_Dewasa,
-        umur_Dewasa,
+        nama,
         telepon: formatPhoneNumber(telepon),
         alamat,
-        baca_quran,
+        pekerjaan,
+        umur,
         status_aktif,
       };
+
+      if (KelasTahsinDewasaId) {
+        const data = await KelasTahsinDewasa.findOne({
+          where: {
+            id: KelasTahsinDewasaId,
+          },
+        });
+
+        if (!data) {
+          throw { name: "Id Kelas Tahsin Dewasa Tidak Ditemukan" };
+        }
+
+        body.KelasTahsinDewasaId = KelasTahsinDewasaId;
+      }
 
       await PesertaTahsinDewasa.update(body, {
         where: {
