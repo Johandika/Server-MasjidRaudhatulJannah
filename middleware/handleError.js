@@ -33,6 +33,9 @@ const handleError = (err, req, res, next) => {
   } else if (err.name === "Nomor Telepon Sudah Terdaftar") {
     code = 400;
     message = "Nomor Telepon Sudah Terdaftar";
+  } else if (err.name === "Maaf Saldo Tidak Cukup") {
+    code = 400;
+    message = "Maaf Saldo Tidak Cukup";
   }
 
   // 404
@@ -51,12 +54,10 @@ const handleError = (err, req, res, next) => {
   } else if (err.name === "Id Kategori Kajian Tidak Ditemukan") {
     code = 404;
     message = "Id Kategori Kajian Tidak Ditemukan";
-  } 
-  else if (err.name === "Id Ustadz Tidak Ditemukan") {
+  } else if (err.name === "Id Ustadz Tidak Ditemukan") {
     code = 404;
     message = "Id Ustadz Tidak Ditemukan";
-  } 
-  else if (err.name === "Id Kegiatan Tidak Ditemukan") {
+  } else if (err.name === "Id Kegiatan Tidak Ditemukan") {
     code = 404;
     message = "Id Kegiatan Tidak Ditemukan";
   } else if (err.name === "Id Kelas Tahsin Anak Tidak Ditemukan") {
@@ -77,6 +78,12 @@ const handleError = (err, req, res, next) => {
   } else if (err.name === "Id Rekening Donasi Tidak Ditemukan") {
     code = 404;
     message = "Id Rekening Donasi Tidak Ditemukan";
+  } else if (err.name === "Id Uang Masuk Tidak Ditemukan") {
+    code = 404;
+    message = "Id Uang Masuk Tidak Ditemukan";
+  } else if (err.name === "Id Uang Keluar Tidak Ditemukan") {
+    code = 404;
+    message = "Id Uang Keluar Tidak Ditemukan";
   }
   //
   else if (err.name === "Id Ustadz Tidak Ditemukan") {

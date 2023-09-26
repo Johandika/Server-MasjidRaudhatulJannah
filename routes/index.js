@@ -11,6 +11,8 @@ const pesertaDiklatRouter = require("./pesertadiklat");
 const pesertaTahsinAnakRouter = require("./pesertatahsinanak");
 const pesertaTahsinDewasaRouter = require("./pesertatahsindewasa");
 const rekeningRouter = require("./rekening");
+const uangKeluarRouter = require("./uangkeluar");
+const uangMasukRouter = require("./uangmasuk");
 const userRouter = require("./user");
 const ustadzRouter = require("./ustadz");
 
@@ -31,5 +33,7 @@ router.use("/pesertaDiklat", pesertaDiklatRouter);
 router.use("/kegiatan", kegiatanRouter);
 router.use("/divisi", divisiRouter);
 router.use("/rekening", rekeningRouter);
+router.use("/uangMasuk", uangMasukRouter);
+router.use("/uangKeluar", uangKeluarRouter);
 
 module.exports = router;

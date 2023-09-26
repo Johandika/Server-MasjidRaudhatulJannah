@@ -1,4 +1,4 @@
-const { RekeningDonasi } = require("../models");
+const { RekeningDonasi, UangMasuk, UangKeluar } = require("../models");
 
 class Controller {
   // GET ALL
@@ -7,8 +7,19 @@ class Controller {
       const { limit, page, search, tanggal, status } = req.query;
 
       let pagination = {
-        include: [],
-        order: [["createdAt", "DESC"]],
+        include: [
+          {
+            separate: true,
+            model: UangKeluar,
+            order: [["createdAt", "DESC"]],
+          },
+          {
+            separate: true,
+            model: UangMasuk,
+            order: [["createdAt", "DESC"]],
+          },
+        ],
+        order: [["atas_nama", "ASC"]],
       };
 
       if (limit) {
@@ -21,7 +32,11 @@ class Controller {
 
       if (search) {
         pagination.where = {
-          [Op.or]: [{ atas_nama: { [Op.iLike]: `%${search}%` } }],
+          [Op.or]: [
+            { atas_nama: { [Op.iLike]: `%${search}%` } },
+            { nomor_rekening: { [Op.iLike]: `%${search}%` } },
+            { catatan: { [Op.iLike]: `%${search}%` } },
+          ],
         };
       }
 
@@ -92,9 +107,9 @@ class Controller {
 
       const dataRekeningDonasi = await RekeningDonasi.create(body);
 
-      res.status(200).json({
-        statusCode: 200,
-        message: "Berhasil Menambahkan Data Rekening Donasi " + tema,
+      res.status(201).json({
+        statusCode: 201,
+        message: "Berhasil Menambahkan Data Rekening Donasi",
         data: dataRekeningDonasi,
       });
     } catch (error) {
