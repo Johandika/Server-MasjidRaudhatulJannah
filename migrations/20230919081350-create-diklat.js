@@ -34,6 +34,10 @@ module.exports = {
       kuota: {
         type: Sequelize.INTEGER,
       },
+      jumlah_peserta: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
       poster_diklat: {
         type: Sequelize.STRING,
       },

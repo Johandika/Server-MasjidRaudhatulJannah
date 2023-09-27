@@ -2,13 +2,10 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Diklat extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Diklat.hasMany(models.PesertaDiklat, {
+        foreignKey: "DiklatId",
+      });
     }
   }
   Diklat.init(
@@ -19,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       biaya: DataTypes.FLOAT,
       catatan: DataTypes.TEXT,
       kuota: DataTypes.INTEGER,
+      jumlah_peserta: DataTypes.INTEGER,
       poster_diklat: DataTypes.STRING,
       status_aktif: DataTypes.BOOLEAN,
     },

@@ -1,5 +1,5 @@
 const handleError = (err, req, res, next) => {
-  console.log(err);
+  console.log(err, "dwdw");
   let code = 500;
   let message = "Internal Server Error";
 
@@ -36,6 +36,9 @@ const handleError = (err, req, res, next) => {
   } else if (err.name === "Maaf Saldo Tidak Cukup") {
     code = 400;
     message = "Maaf Saldo Tidak Cukup";
+  } else if (err.name === "Maaf Kuota Diklat Sudah Habis") {
+    code = 400;
+    message = `Maaf Kuota Diklat ${err.diklat} Sudah Habis`;
   }
 
   // 404
@@ -75,6 +78,9 @@ const handleError = (err, req, res, next) => {
   } else if (err.name === "Id Peserta Tahsin Dewasa Tidak Ditemukan") {
     code = 404;
     message = "Id Peserta Tahsin Dewasa Tidak Ditemukan";
+  } else if (err.name === "Id Peserta Diklat Tidak Ditemukan") {
+    code = 404;
+    message = "Id Peserta Diklat Tidak Ditemukan";
   } else if (err.name === "Id Rekening Donasi Tidak Ditemukan") {
     code = 404;
     message = "Id Rekening Donasi Tidak Ditemukan";
@@ -117,6 +123,12 @@ const handleError = (err, req, res, next) => {
 
   // 401
   else if (err.name === "JsonWebTokenError") {
+    code = 401;
+    message = "Token Tidak Sesuai";
+  } else if (err.name === "TokenExpiredError") {
+    code = 401;
+    message = "Token telah kedaluwarsa. Silakan masuk kembali";
+  } else if (err.name === "jwt expired") {
     code = 401;
     message = "Token Tidak Sesuai";
   } else if (err.name === "Invalid authorization") {

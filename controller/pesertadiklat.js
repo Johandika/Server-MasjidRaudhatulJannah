@@ -1,4 +1,7 @@
-const { PesertaDiklat, Diklat } = require("../models");
+const { Op } = require("sequelize");
+const formatPhoneNumber = require("../helper/formatPhoneNumber");
+const remove = require("../helper/removeFile");
+const { PesertaDiklat, Diklat, sequelize, Sequelize } = require("../models");
 
 class Controller {
   // GET ALL
@@ -90,6 +93,7 @@ class Controller {
         alamat,
         pekerjaan,
         umur,
+        status_pembayaran: req.file ? "BELUM_VERIFIKASI" : "BELUM_DIBAYAR",
         file_bukti_pembayaran: req.file ? req.file.path : "",
       };
 
@@ -101,11 +105,17 @@ class Controller {
         });
 
         if (!data) {
-          throw { name: "Id Diklat Tidak Ditemukan" };
+          throw { name: "Id Peserta Diklat Tidak Ditemukan" };
         } else {
           body.DiklatId = DiklatId;
         }
       }
+
+      const data = await Diklat.findOne({
+        where: {
+          id: DiklatId,
+        },
+      });
 
       const dataPesertaDiklat = await PesertaDiklat.create(body);
 
@@ -123,16 +133,7 @@ class Controller {
   static async update(req, res, next) {
     try {
       const { id } = req.params;
-      const {
-        nama,
-        telepon,
-        alamat,
-        pekerjaan,
-        umur,
-        DiklatId,
-        status_pembayaran,
-        status_aktif,
-      } = req.body;
+      const { nama, telepon, alamat, pekerjaan, umur, status_aktif } = req.body;
 
       const dataPesertaDiklat = await PesertaDiklat.findOne({
         where: {
@@ -150,23 +151,11 @@ class Controller {
         alamat,
         pekerjaan,
         umur,
-        status_pembayaran,
         status_aktif,
-        file_bukti_pembayaran: req.file ? req.file.path : "",
       };
-
-      if (DiklatId) {
-        const data = await Diklat.findOne({
-          where: {
-            id: DiklatId,
-          },
-        });
-
-        if (!data) {
-          throw { name: "Id Diklat Tidak Ditemukan" };
-        } else {
-          body.DiklatId = DiklatId;
-        }
+      if (req.file) {
+        remove(dataPesertaDiklat.file_bukti_pembayaran);
+        body.file_bukti_pembayaran = req.file ? req.file.path : "";
       }
 
       await PesertaDiklat.update(body, {

@@ -26,7 +26,7 @@ class Controller {
             ],
           },
         ],
-        order: [["createdAt", "DESC"]],
+        order: [["nama", "ASC"]],
       };
 
       if (limit) {

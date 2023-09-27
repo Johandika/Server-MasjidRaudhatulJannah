@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       PengajarTahsinId: DataTypes.UUID,
       status_aktif: DataTypes.BOOLEAN,
       kuota: DataTypes.INTEGER,
+      jumlah_peserta: DataTypes.INTEGER,
     },
     {
       sequelize,

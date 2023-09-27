@@ -14,6 +14,9 @@ const upload = () => {
       if (file.fieldname === "poster_diklat") {
         cb(null, `./upload/poster_diklat/`);
       }
+      if (file.fieldname === "file_bukti_pembayaran") {
+        cb(null, `./upload/file_bukti_pembayaran/`);
+      }
     },
     filename: function (req, file, cb) {
       const tanggal = new Date().getTime().toString();

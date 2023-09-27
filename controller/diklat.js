@@ -1,3 +1,4 @@
+const remove = require("../helper/removeFile");
 const { Diklat } = require("../models");
 
 class Controller {
@@ -85,16 +86,18 @@ class Controller {
       const { tema, waktu, pemateri, biaya, catatan, kuota } = req.body;
       const dataDiklat = await Diklat.create({
         tema,
-        waktu,
+        waktu: waktu ? waktu : null,
         pemateri,
         biaya,
         catatan,
         kuota,
+        poster_diklat: req.file ? req.file.path : "",
+        status_aktif: true,
       });
 
-      res.status(200).json({
-        statusCode: 200,
-        message: "Berhasil Menambahkan Data Diklat " + tema,
+      res.status(201).json({
+        statusCode: 201,
+        message: "Berhasil Menambahkan Data Diklat ",
         data: dataDiklat,
       });
     } catch (error) {
@@ -118,21 +121,25 @@ class Controller {
         throw { name: "Id Diklat Tidak Ditemukan" };
       }
 
-      await Diklat.update(
-        {
-          tema,
-          waktu,
-          pemateri,
-          biaya,
-          catatan,
-          kuota,
+      let body = {
+        tema,
+        waktu,
+        pemateri,
+        biaya,
+        catatan,
+        kuota,
+      };
+
+      if (req.file) {
+        remove(dataDiklat.poster_diklat);
+        body.poster_diklat = req.file.path;
+      }
+
+      await Diklat.update(body, {
+        where: {
+          id,
         },
-        {
-          where: {
-            id,
-          },
-        }
-      );
+      });
 
       res.status(200).json({
         statusCode: 200,

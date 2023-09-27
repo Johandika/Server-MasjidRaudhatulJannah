@@ -20,7 +20,7 @@ class Controller {
             model: Jadwal,
           },
         ],
-        order: [["createdAt", "DESC"]],
+        order: [["kelas", "ASC"]],
       };
 
       if (limit) {
