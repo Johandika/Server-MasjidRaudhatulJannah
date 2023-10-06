@@ -17,6 +17,12 @@ const upload = () => {
       if (file.fieldname === "file_bukti_pembayaran") {
         cb(null, `./upload/file_bukti_pembayaran/`);
       }
+      if (file.fieldname === "gambar_kegiatan") {
+        cb(null, `./upload/gambar_kegiatan/`);
+      }
+      if (file.fieldname === "gambar_layanan") {
+        cb(null, `./upload/gambar_layanan/`);
+      }
     },
     filename: function (req, file, cb) {
       const tanggal = new Date().getTime().toString();

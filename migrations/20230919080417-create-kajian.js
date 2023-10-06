@@ -39,6 +39,7 @@ module.exports = {
       },
       status_aktif: {
         type: Sequelize.BOOLEAN,
+        defaultValue: true,
       },
       link: {
         type: Sequelize.TEXT,

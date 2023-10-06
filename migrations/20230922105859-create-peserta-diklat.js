@@ -39,7 +39,7 @@ module.exports = {
       },
       status_aktif: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false,
+        defaultValue: true,
       },
       DiklatId: {
         type: Sequelize.UUID,

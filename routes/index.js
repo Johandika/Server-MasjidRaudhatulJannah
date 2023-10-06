@@ -6,6 +6,7 @@ const kategoriKajianRouter = require("./kategorikajian");
 const kegiatanRouter = require("./kegiatan");
 const kelasTahsinAnakRouter = require("./kelastahsinanak");
 const kelasTahsinDewasaDewasa = require("./kelastahsindewasa");
+const layananRouter = require("./layanan");
 const pengajartahsinRouter = require("./pengajartahsin");
 const pesertaDiklatRouter = require("./pesertadiklat");
 const pesertaTahsinAnakRouter = require("./pesertatahsinanak");
@@ -35,5 +36,6 @@ router.use("/divisi", divisiRouter);
 router.use("/rekening", rekeningRouter);
 router.use("/uangMasuk", uangMasukRouter);
 router.use("/uangKeluar", uangKeluarRouter);
+router.use("/layanan", layananRouter);
 
 module.exports = router;
