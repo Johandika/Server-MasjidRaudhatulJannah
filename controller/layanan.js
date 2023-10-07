@@ -96,7 +96,7 @@ class Controller {
       let body = {
         title,
         sub_title,
-        waktu,
+        waktu: waktu ? waktu : new Date(),
         lokasi,
         informasi,
         deskripsi,
@@ -104,15 +104,15 @@ class Controller {
         deskripsi_gambar,
       };
 
-      const dataDivisi = await Divisi.findOne({
-        where: {
-          id: DivisiId,
-        },
-      });
-
-      if (!dataDivisi) {
-        throw { name: "Id Divisi Tidak Ditemukan" };
-      } else {
+      if (DivisiId) {
+        const dataDivisi = await Divisi.findOne({
+          where: {
+            id: DivisiId,
+          },
+        });
+        if (!dataDivisi) {
+          throw { name: "Id Divisi Tidak Ditemukan" };
+        }
         body.DivisiId = DivisiId;
       }
 
@@ -121,7 +121,7 @@ class Controller {
       res.status(201).json({
         statusCode: 201,
         message: "Berhasil Membuat Data Layanan Baru",
-        data: dataDivisi,
+        data: dataLayanan,
       });
     } catch (error) {
       next(error);
@@ -156,22 +156,22 @@ class Controller {
       let body = {
         title,
         sub_title,
-        waktu,
+        waktu: waktu ? waktu : new Date(),
         lokasi,
         informasi,
         deskripsi,
         deskripsi_gambar,
       };
 
-      const dataDivisi = await Divisi.findOne({
-        where: {
-          id: DivisiId,
-        },
-      });
-
-      if (!dataDivisi) {
-        throw { name: "Id Divisi Tidak Ditemukan" };
-      } else {
+      if (DivisiId) {
+        const dataDivisi = await Divisi.findOne({
+          where: {
+            id: DivisiId,
+          },
+        });
+        if (!dataDivisi) {
+          throw { name: "Id Divisi Tidak Ditemukan" };
+        }
         body.DivisiId = DivisiId;
       }
 
@@ -208,6 +208,8 @@ class Controller {
       if (!dataLayanan) {
         throw { name: "Id Layanan Tidak Ditemukan" };
       }
+
+      remove(dataLayanan.gambar_layanan);
 
       await Layanan.destroy({
         where: {
