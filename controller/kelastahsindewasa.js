@@ -1,3 +1,4 @@
+const ValidateNumber = require("../helper/validateNumber");
 const {
   KelasTahsinDewasa,
   PengajarTahsin,
@@ -108,7 +109,7 @@ class Controller {
       let body = {
         kelas,
         catatan,
-        kuota,
+        kuota: ValidateNumber(kuota),
       };
 
       if (PengajarTahsinId) {
@@ -145,8 +146,7 @@ class Controller {
   static async update(req, res, next) {
     try {
       const { id } = req.params;
-      const { kelas, catatan, kuota, PengajarTahsinId, PesertaTahsinDewasaId } =
-        req.body;
+      const { kelas, catatan, kuota, PengajarTahsinId, hari } = req.body;
 
       const dataKelasTahsinDewasa = await KelasTahsinDewasa.findOne({
         where: {
@@ -161,7 +161,7 @@ class Controller {
       let body = {
         kelas,
         catatan,
-        kuota,
+        kuota: ValidateNumber(kuota),
       };
 
       if (PengajarTahsinId) {
@@ -178,25 +178,24 @@ class Controller {
         }
       }
 
-      if (PesertaTahsinDewasaId) {
-        const data = await PesertaTahsinDewasa.findOne({
-          where: {
-            id: PesertaTahsinDewasaId,
-          },
-        });
-
-        if (!data) {
-          throw { name: "Id Peserta Tahsin Dewasa Tidak Ditemukan" };
-        } else {
-          body.PesertaTahsinDewasaId = PesertaTahsinDewasaId;
-        }
-      }
-
       await KelasTahsinDewasa.update(body, {
         where: {
           id,
         },
       });
+
+      if (hari) {
+        await Jadwal.destroy({
+          where: {
+            KelasTahsinDewasaId: id,
+          },
+        });
+
+        await Jadwal.create({
+          hari: hari,
+          KelasTahsinDewasaId: id,
+        });
+      }
 
       res.status(200).json({
         statusCode: 200,

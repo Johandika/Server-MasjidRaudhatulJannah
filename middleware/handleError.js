@@ -36,9 +36,12 @@ const handleError = (err, req, res, next) => {
   } else if (err.name === "Maaf Saldo Tidak Cukup") {
     code = 400;
     message = "Maaf Saldo Tidak Cukup";
-  } else if (err.name === "Maaf Kuota Diklat Sudah Habis") {
+  } else if (err.name === "Maaf Kuota Diklat Sudah Penuh") {
     code = 400;
-    message = `Maaf Kuota Diklat ${err.diklat} Sudah Habis`;
+    message = `Maaf Kuota Diklat ${err.diklat} Sudah Penuh`;
+  } else if (err.name === "Maaf Kuota Kelas Tahsin Sudah Penuh") {
+    code = 400;
+    message = `Maaf Kuota Kelas Tahsin ${err.kelas} Sudah Penuh`;
   }
 
   // 404

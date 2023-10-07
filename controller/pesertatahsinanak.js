@@ -1,9 +1,12 @@
+const { literal } = require("sequelize");
 const formatPhoneNumber = require("../helper/formatPhoneNumber");
+const ValidateNumber = require("../helper/validateNumber");
 const {
   PesertaTahsinAnak,
   KelasTahsinAnak,
   Jadwal,
   PengajarTahsin,
+  sequelize,
 } = require("../models");
 
 class Controller {
@@ -134,7 +137,7 @@ class Controller {
         nama_ayah,
         nama_ibu,
         nama_anak,
-        umur_anak,
+        umur_anak: ValidateNumber(umur_anak),
         telepon: formatPhoneNumber(telepon),
         alamat,
         baca_quran,
@@ -144,7 +147,6 @@ class Controller {
         const data = await KelasTahsinAnak.findOne({
           where: {
             id: KelasTahsinAnakId,
-            status_aktif: true,
           },
         });
 
@@ -152,10 +154,28 @@ class Controller {
           throw { name: "Id Kelas Tahsin Anak Tidak Ditemukan" };
         }
 
+        if (data.jumlah_peserta >= data.kuota) {
+          throw {
+            name: "Maaf Kuota Kelas Tahsin Sudah Penuh",
+            kelas: "Anak",
+          };
+        }
+
         body.KelasTahsinAnakId = KelasTahsinAnakId;
       }
 
       const dataPesertaTahsinAnak = await PesertaTahsinAnak.create(body);
+
+      await KelasTahsinAnak.update(
+        {
+          jumlah_peserta: sequelize.literal("jumlah_peserta + 1"),
+        },
+        {
+          where: {
+            id: KelasTahsinAnakId,
+          },
+        }
+      );
 
       res.status(201).json({
         statusCode: 201,
@@ -180,6 +200,7 @@ class Controller {
         alamat,
         baca_quran,
         status_aktif,
+        KelasTahsinAnakId,
       } = req.body;
 
       const dataPesertaTahsinAnak = await PesertaTahsinAnak.findOne({
@@ -195,8 +216,8 @@ class Controller {
       let body = {
         nama_ayah,
         nama_ibu,
-        nama_Anak,
-        umur_Anak,
+        nama_anak,
+        umur_anak: ValidateNumber(umur_anak),
         telepon: formatPhoneNumber(telepon),
         alamat,
         baca_quran,
@@ -207,7 +228,6 @@ class Controller {
         const data = await KelasTahsinAnak.findOne({
           where: {
             id: KelasTahsinAnakId,
-            status_aktif: true,
           },
         });
 
@@ -247,6 +267,17 @@ class Controller {
       if (!dataPesertaTahsinAnak) {
         throw { name: "Id Peserta Tahsin Anak Tidak Ditemukan" };
       }
+
+      await KelasTahsinAnak.update(
+        {
+          jumlah_peserta: sequelize.literal("jumlah_peserta - 1"),
+        },
+        {
+          where: {
+            id: dataPesertaTahsinAnak.KelasTahsinAnakId,
+          },
+        }
+      );
 
       await PesertaTahsinAnak.destroy({
         where: {

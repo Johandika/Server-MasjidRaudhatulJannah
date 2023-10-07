@@ -1,4 +1,5 @@
 const formatPhoneNumber = require("../helper/formatPhoneNumber");
+const ValidateNumber = require("../helper/validateNumber");
 const {
   PengajarTahsin,
   KelasTahsinAnak,
@@ -111,7 +112,7 @@ class Controller {
         telepon: formatPhoneNumber(telepon),
         alamat,
         pekerjaan,
-        umur,
+        umur: ValidateNumber(umur),
       };
 
       const dataPengajarTahsin = await PengajarTahsin.create(body);
@@ -147,7 +148,7 @@ class Controller {
         telepon: formatPhoneNumber(telepon),
         alamat,
         pekerjaan,
-        umur,
+        umur: ValidateNumber(umur),
       };
 
       await PengajarTahsin.update(body, {

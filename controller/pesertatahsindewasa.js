@@ -1,9 +1,12 @@
+const { literal } = require("sequelize");
 const formatPhoneNumber = require("../helper/formatPhoneNumber");
+const ValidateNumber = require("../helper/validateNumber");
 const {
   PesertaTahsinDewasa,
   KelasTahsinDewasa,
   PengajarTahsin,
   Jadwal,
+  sequelize,
 } = require("../models");
 
 class Controller {
@@ -125,25 +128,41 @@ class Controller {
         telepon: formatPhoneNumber(telepon),
         alamat,
         pekerjaan,
-        umur,
+        umur: ValidateNumber(umur),
       };
 
       if (KelasTahsinDewasaId) {
         const data = await KelasTahsinDewasa.findOne({
           where: {
             id: KelasTahsinDewasaId,
-            status_aktif: true,
           },
         });
 
         if (!data) {
           throw { name: "Id Kelas Tahsin Dewasa Tidak Ditemukan" };
         }
+        if (data.jumlah_peserta >= data.kuota) {
+          throw {
+            name: "Maaf Kuota Kelas Tahsin Sudah Penuh",
+            kelas: "Dewasa",
+          };
+        }
 
         body.KelasTahsinDewasaId = KelasTahsinDewasaId;
       }
 
       const dataPesertaTahsinDewasa = await PesertaTahsinDewasa.create(body);
+
+      await KelasTahsinDewasa.update(
+        {
+          jumlah_peserta: sequelize.literal("jumlah_peserta + 1"),
+        },
+        {
+          where: {
+            id: KelasTahsinDewasaId,
+          },
+        }
+      );
 
       res.status(200).json({
         statusCode: 200,
@@ -184,7 +203,7 @@ class Controller {
         telepon: formatPhoneNumber(telepon),
         alamat,
         pekerjaan,
-        umur,
+        umur: ValidateNumber(umur),
         status_aktif,
       };
 
@@ -231,6 +250,17 @@ class Controller {
       if (!dataPesertaTahsinDewasa) {
         throw { name: "Id Peserta Tahsin Dewasa Tidak Ditemukan" };
       }
+
+      await KelasTahsinDewasa.update(
+        {
+          jumlah_peserta: sequelize.literal("jumlah_peserta - 1"),
+        },
+        {
+          where: {
+            id: dataPesertaTahsinDewasa.KelasTahsinDewasaId,
+          },
+        }
+      );
 
       await PesertaTahsinDewasa.destroy({
         where: {

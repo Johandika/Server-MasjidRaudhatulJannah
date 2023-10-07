@@ -95,12 +95,22 @@ class Controller {
       const { username, email, password, telepon } = req.body;
 
       let body = {
-        username,
-        email,
+        username: username.toLowerCase(),
+        email: email.toLowerCase(),
         password,
         telepon: formatPhoneNumber(telepon),
         role: "Admin",
       };
+
+      const data = await User.findOne({
+        where: {
+          telepon: formatPhoneNumber(telepon),
+        },
+      });
+
+      if (data) {
+        throw { name: "Nomor Telepon Sudah Terdaftar" };
+      }
 
       const dataUser = await User.create(body);
 
@@ -116,7 +126,7 @@ class Controller {
   // LOGIN
   static async login(req, res, next) {
     try {
-      const { email, password, deviceId } = req.body;
+      const { email, password } = req.body;
 
       if (!email) {
         throw { name: "Mohon Masukkan Email" };
