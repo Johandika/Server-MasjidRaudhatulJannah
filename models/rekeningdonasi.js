@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       atas_nama: DataTypes.STRING,
       nomor_rekening: DataTypes.STRING,
       catatan: DataTypes.TEXT,
+      nama_bank: DataTypes.STRING,
       saldo: DataTypes.FLOAT,
     },
     {

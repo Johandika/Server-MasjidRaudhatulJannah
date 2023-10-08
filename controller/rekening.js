@@ -1,3 +1,4 @@
+const ValidateFloat = require("../helper/validateFloat");
 const { RekeningDonasi, UangMasuk, UangKeluar } = require("../models");
 
 class Controller {
@@ -96,13 +97,14 @@ class Controller {
   // CREATE
   static async craete(req, res, next) {
     try {
-      const { atas_nama, nomor_rekening, catatan, saldo } = req.body;
+      const { atas_nama, nomor_rekening, catatan, nama_bank, saldo } = req.body;
 
       let body = {
         atas_nama,
         nomor_rekening,
         catatan,
-        saldo,
+        nama_bank,
+        saldo: ValidateFloat(saldo),
       };
 
       const dataRekeningDonasi = await RekeningDonasi.create(body);
@@ -121,7 +123,7 @@ class Controller {
   static async update(req, res, next) {
     try {
       const { id } = req.params;
-      const { atas_nama, nomor_rekening, catatan, saldo } = req.body;
+      const { atas_nama, nomor_rekening, nama_bank, catatan, saldo } = req.body;
 
       const dataRekeningDonasi = await RekeningDonasi.findOne({
         where: {
@@ -137,7 +139,8 @@ class Controller {
         atas_nama,
         nomor_rekening,
         catatan,
-        saldo,
+        nama_bank,
+        saldo: ValidateFloat(saldo),
       };
 
       await RekeningDonasi.update(body, {

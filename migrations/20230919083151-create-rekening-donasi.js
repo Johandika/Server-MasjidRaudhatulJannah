@@ -25,6 +25,9 @@ module.exports = {
       catatan: {
         type: Sequelize.TEXT,
       },
+      nama_bank: {
+        type: Sequelize.STRING,
+      },
       saldo: {
         type: Sequelize.FLOAT,
       },

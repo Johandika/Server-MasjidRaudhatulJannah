@@ -1,4 +1,5 @@
 const formatPhoneNumber = require("../helper/formatPhoneNumber");
+const ValidateNumber = require("../helper/validateNumber");
 const { Ustadz, Kajian, KategoriKajian, Jadwal } = require("../models");
 
 class Controller {
@@ -115,7 +116,7 @@ class Controller {
         telepon: formatPhoneNumber(telepon),
         alamat,
         pekerjaan,
-        umur,
+        umur: ValidateNumber(umur),
       };
 
       const dataUstadz = await Ustadz.create(body);
@@ -151,7 +152,7 @@ class Controller {
         telepon: formatPhoneNumber(telepon),
         alamat,
         pekerjaan,
-        umur,
+        umur: ValidateNumber(umur),
         status_aktif,
       };
 
