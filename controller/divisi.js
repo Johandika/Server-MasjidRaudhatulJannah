@@ -92,9 +92,9 @@ class Controller {
         catatan,
       });
 
-      res.status(200).json({
-        statusCode: 200,
-        message: "Berhasil Menambahkan Data Divisi " + tema,
+      res.status(201).json({
+        statusCode: 201,
+        message: "Berhasil Menambahkan Data Divisi ",
         data: dataDivisi,
       });
     } catch (error) {
