@@ -3,9 +3,9 @@ const authentication = require("../middleware/authentication");
 
 const rekeningRouter = require("express").Router();
 
-rekeningRouter.get("/", authentication, Controller.getAll);
+rekeningRouter.get("/", Controller.getAll);
 
-rekeningRouter.get("/:id", authentication, Controller.getOne);
+rekeningRouter.get("/:id", Controller.getOne);
 
 rekeningRouter.post("/", authentication, Controller.craete);
 
