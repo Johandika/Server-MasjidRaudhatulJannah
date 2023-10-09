@@ -1,11 +1,12 @@
 const Controller = require("../controller/ustadz");
+const ApiKey = require("../middleware/ApiKey");
 const authentication = require("../middleware/authentication");
 
 const ustadzRouter = require("express").Router();
 
-ustadzRouter.get("/", authentication, Controller.getAll);
+ustadzRouter.get("/", ApiKey, Controller.getAll);
 
-ustadzRouter.get("/:id", authentication, Controller.getOne);
+ustadzRouter.get("/:id", ApiKey, Controller.getOne);
 
 ustadzRouter.post("/", authentication, Controller.craete);
 

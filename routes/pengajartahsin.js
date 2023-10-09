@@ -1,11 +1,12 @@
 const Controller = require("../controller/pengajartahsin");
+const ApiKey = require("../middleware/ApiKey");
 const authentication = require("../middleware/authentication");
 
 const pengajartahsinRouter = require("express").Router();
 
-pengajartahsinRouter.get("/", authentication, Controller.getAll);
+pengajartahsinRouter.get("/", ApiKey, Controller.getAll);
 
-pengajartahsinRouter.get("/:id", authentication, Controller.getOne);
+pengajartahsinRouter.get("/:id", ApiKey, Controller.getOne);
 
 pengajartahsinRouter.post("/", authentication, Controller.craete);
 

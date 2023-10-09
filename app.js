@@ -18,5 +18,5 @@ app.use("/upload", express.static("upload"));
 app.use(handleError);
 
 app.listen(port, () => {
-  console.log(`PRINTHINK SERVER CONNECTED!`);
+  console.log(`MASJID RAUDHATUL JANNAH SERVER CONNECTED!`);
 });

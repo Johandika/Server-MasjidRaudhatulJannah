@@ -1,11 +1,12 @@
 const Controller = require("../controller/divisi");
+const ApiKey = require("../middleware/ApiKey");
 const authentication = require("../middleware/authentication");
 
 const divisiRouter = require("express").Router();
 
-divisiRouter.get("/", authentication, Controller.getAll);
+divisiRouter.get("/", ApiKey, Controller.getAll);
 
-divisiRouter.get("/:id", authentication, Controller.getOne);
+divisiRouter.get("/:id", ApiKey, Controller.getOne);
 
 divisiRouter.post("/", authentication, Controller.craete);
 

@@ -1,14 +1,15 @@
 const Controller = require("../controller/diklat");
 const upload = require("../helper/multer");
+const ApiKey = require("../middleware/ApiKey");
 const authentication = require("../middleware/authentication");
 
 const diklatRouter = require("express").Router();
 
 const file = upload();
 
-diklatRouter.get("/", authentication, Controller.getAll);
+diklatRouter.get("/", ApiKey, Controller.getAll);
 
-diklatRouter.get("/:id", authentication, Controller.getOne);
+diklatRouter.get("/:id", ApiKey, Controller.getOne);
 
 diklatRouter.post(
   "/",

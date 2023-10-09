@@ -1,11 +1,12 @@
 const Controller = require("../controller/rekening");
+const ApiKey = require("../middleware/ApiKey");
 const authentication = require("../middleware/authentication");
 
 const rekeningRouter = require("express").Router();
 
-rekeningRouter.get("/", Controller.getAll);
+rekeningRouter.get("/", ApiKey, Controller.getAll);
 
-rekeningRouter.get("/:id", Controller.getOne);
+rekeningRouter.get("/:id", ApiKey, Controller.getOne);
 
 rekeningRouter.post("/", authentication, Controller.craete);
 

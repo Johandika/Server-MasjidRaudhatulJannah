@@ -1,11 +1,12 @@
 const Controller = require("../controller/pesertatahsindewasa");
+const ApiKey = require("../middleware/ApiKey");
 const authentication = require("../middleware/authentication");
 
 const pesertaTahsinDewasaRouter = require("express").Router();
 
-pesertaTahsinDewasaRouter.get("/", authentication, Controller.getAll);
+pesertaTahsinDewasaRouter.get("/", ApiKey, Controller.getAll);
 
-pesertaTahsinDewasaRouter.get("/:id", authentication, Controller.getOne);
+pesertaTahsinDewasaRouter.get("/:id", ApiKey, Controller.getOne);
 
 pesertaTahsinDewasaRouter.post("/", authentication, Controller.craete);
 

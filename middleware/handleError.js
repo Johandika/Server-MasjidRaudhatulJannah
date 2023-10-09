@@ -1,5 +1,5 @@
 const handleError = (err, req, res, next) => {
-  console.log(err, "dwdw");
+  console.log(err);
   let code = 500;
   let message = "Internal Server Error";
 
@@ -138,6 +138,9 @@ const handleError = (err, req, res, next) => {
   } else if (err.name === "Invalid authorization") {
     code = 401;
     message = "Akses Token Tidak Ada";
+  } else if (err.name === "Api Key Tidak Valid") {
+    code = 401;
+    message = "Api Key Tidak Valid";
   }
 
   // 403

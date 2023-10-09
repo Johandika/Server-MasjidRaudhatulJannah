@@ -177,8 +177,6 @@ class Controller {
           throw { name: "Maaf Saldo Tidak Cukup" };
         }
 
-        console.log(data.saldo, selisih);
-
         body.RekeningDonasiId = RekeningDonasiId;
       }
 
