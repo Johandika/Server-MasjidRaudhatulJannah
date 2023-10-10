@@ -84,6 +84,7 @@ class Controller {
   static async craete(req, res, next) {
     try {
       const { tema, waktu, pemateri, biaya, catatan, kuota } = req.body;
+
       const dataDiklat = await Diklat.create({
         tema,
         waktu: waktu ? waktu : null,
@@ -92,6 +93,7 @@ class Controller {
         catatan,
         kuota,
         poster_diklat: req.file ? req.file.path : "",
+        jumlah_peserta: 0,
         status_aktif: true,
       });
 
@@ -109,7 +111,8 @@ class Controller {
   static async update(req, res, next) {
     try {
       const { id } = req.params;
-      const { tema, waktu, pemateri, biaya, catatan, kuota } = req.body;
+      const { tema, waktu, pemateri, jumlah_peserta, biaya, catatan, kuota } =
+        req.body;
 
       const dataDiklat = await Diklat.findOne({
         where: {
@@ -125,6 +128,7 @@ class Controller {
         tema,
         waktu,
         pemateri,
+        jumlah_peserta,
         biaya,
         catatan,
         kuota,
@@ -164,6 +168,8 @@ class Controller {
       if (!dataDiklat) {
         throw { name: "Id Diklat Tidak Ditemukan" };
       }
+
+      remove(dataDiklat.poster_diklat);
 
       await Diklat.destroy({
         where: {
