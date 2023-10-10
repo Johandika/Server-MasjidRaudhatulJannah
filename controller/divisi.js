@@ -1,5 +1,5 @@
 const formatPhoneNumber = require("../helper/formatPhoneNumber");
-const { Divisi } = require("../models");
+const { Divisi, Kegiatan, Layanan } = require("../models");
 
 class Controller {
   // GET ALL
@@ -8,7 +8,14 @@ class Controller {
       const { limit, page, search, tanggal, status } = req.query;
 
       let pagination = {
-        include: [],
+        include: [
+          {
+            model: Kegiatan,
+          },
+          {
+            model: Layanan,
+          },
+        ],
         order: [["createdAt", "DESC"]],
       };
 
@@ -64,6 +71,14 @@ class Controller {
         where: {
           id,
         },
+        include: [
+          {
+            model: Kegiatan,
+          },
+          {
+            model: Layanan,
+          },
+        ],
       });
 
       if (!dataDivisi) {

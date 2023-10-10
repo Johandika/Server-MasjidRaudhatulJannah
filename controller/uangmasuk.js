@@ -92,7 +92,7 @@ class Controller {
 
       let body = {
         total,
-        waktu: waktu ? waktu : null,
+        waktu: waktu ? waktu : new Date(),
         keterangan,
         informasi,
       };
@@ -138,8 +138,7 @@ class Controller {
   static async update(req, res, next) {
     try {
       const { id } = req.params;
-      const { total, waktu, keterangan, informasi, RekeningDonasiId } =
-        req.body;
+      const { total, keterangan, informasi, RekeningDonasiId } = req.body;
 
       const dataUangMasuk = await UangMasuk.findOne({
         where: {
@@ -153,7 +152,6 @@ class Controller {
 
       let body = {
         total,
-        waktu: waktu ? waktu : null,
         keterangan,
         informasi,
       };

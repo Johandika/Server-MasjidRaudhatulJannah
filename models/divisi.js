@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
       Divisi.hasMany(models.Layanan, {
         foreignKey: "DivisiId",
       });
+      Divisi.hasMany(models.Kegiatan, {
+        foreignKey: "DivisiId",
+      });
     }
   }
   Divisi.init(

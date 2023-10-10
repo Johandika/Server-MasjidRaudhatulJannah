@@ -2,13 +2,10 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Kegiatan extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Kegiatan.belongsTo(models.Divisi, {
+        foreignKey: "DivisiId",
+      });
     }
   }
   Kegiatan.init(
@@ -17,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       penanggung_jawab: DataTypes.STRING,
       waktu: DataTypes.DATE,
       lokasi: DataTypes.STRING,
-      gambar_layanan: DataTypes.STRING,
+      gambar_kegiatan: DataTypes.STRING,
       deskripsi_gambar: DataTypes.TEXT,
       catatan: DataTypes.TEXT,
       deskripsi: DataTypes.TEXT,

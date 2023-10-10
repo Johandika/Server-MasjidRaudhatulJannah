@@ -1,3 +1,4 @@
+const remove = require("../helper/removeFile");
 const { Kegiatan, Divisi } = require("../models");
 
 class Controller {
@@ -87,22 +88,25 @@ class Controller {
         penanggung_jawab,
         waktu,
         lokasi,
-        cover_image,
+        deskripsi_gambar,
         catatan,
         deskripsi,
         link,
+        headline,
         DivisiId,
       } = req.body;
 
       let body = {
         tema,
         penanggung_jawab,
-        waktu,
+        waktu: waktu ? waktu : new Date(),
         lokasi,
-        cover_image,
+        gambar_kegiatan: req.file ? req.file.path : "",
+        deskripsi_gambar,
         catatan,
         deskripsi,
         link,
+        headline,
       };
 
       if (DivisiId) {
@@ -141,10 +145,11 @@ class Controller {
         penanggung_jawab,
         waktu,
         lokasi,
-        cover_image,
+        deskripsi_gambar,
         catatan,
         deskripsi,
         link,
+        headline,
         DivisiId,
         status_aktif,
       } = req.body;
@@ -162,14 +167,20 @@ class Controller {
       let body = {
         tema,
         penanggung_jawab,
-        waktu,
+        waktu: waktu ? waktu : new Date(),
         lokasi,
-        cover_image,
+        deskripsi_gambar,
         catatan,
         deskripsi,
         link,
+        headline,
         status_aktif,
       };
+
+      if (req.file) {
+        remove(dataKegiatan.gambar_kegiatan);
+        body.gambar_kegiatan = req.file ? req.file.path : "";
+      }
 
       if (DivisiId) {
         const data = await Divisi.findOne({
@@ -214,6 +225,8 @@ class Controller {
       if (!dataKegiatan) {
         throw { name: "Id Kegiatan Tidak Ditemukan" };
       }
+
+      remove(dataKegiatan.gambar_kegiatan);
 
       await Kegiatan.destroy({
         where: {
