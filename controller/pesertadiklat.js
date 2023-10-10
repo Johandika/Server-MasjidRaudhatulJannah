@@ -1,4 +1,4 @@
-const { Op } = require("sequelize");
+const { Op, literal } = require("sequelize");
 const formatPhoneNumber = require("../helper/formatPhoneNumber");
 const remove = require("../helper/removeFile");
 const { PesertaDiklat, Diklat, sequelize, Sequelize } = require("../models");
@@ -88,7 +88,7 @@ class Controller {
       const { nama, telepon, alamat, pekerjaan, umur, DiklatId } = req.body;
 
       let body = {
-        nama,
+        nama: nama.toLowerCase(),
         telepon: formatPhoneNumber(telepon),
         alamat,
         pekerjaan,
@@ -108,6 +108,13 @@ class Controller {
           throw { name: "Id Peserta Diklat Tidak Ditemukan" };
         } else {
           body.DiklatId = DiklatId;
+
+          if (data.jumlah_peserta >= data.kuota) {
+            throw {
+              name: "Maaf Kuota Diklat Sudah Penuh",
+              diklat: `${data.tema}`,
+            };
+          }
         }
       }
 
@@ -116,6 +123,17 @@ class Controller {
           id: DiklatId,
         },
       });
+
+      const datas = await PesertaDiklat.findOne({
+        where: {
+          nama: nama.toLowerCase(),
+          telepon: formatPhoneNumber(telepon),
+        },
+      });
+
+      if (datas) {
+        throw { name: "Mohon Bersabar, Data Kamu Lagi Diproses" };
+      }
 
       const dataPesertaDiklat = await PesertaDiklat.create(body);
 
@@ -153,6 +171,7 @@ class Controller {
         umur,
         status_aktif,
       };
+
       if (req.file) {
         remove(dataPesertaDiklat.file_bukti_pembayaran);
         body.file_bukti_pembayaran = req.file ? req.file.path : "";
@@ -173,6 +192,67 @@ class Controller {
     }
   }
 
+  // UPDATE STATUS
+  static async updateStatus(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { status_pembayaran } = req.body;
+
+      const dataPesertaDiklat = await PesertaDiklat.findOne({
+        where: {
+          id,
+        },
+      });
+
+      if (!dataPesertaDiklat) {
+        throw { name: "Id Peserta Diklat Tidak Ditemukan" };
+      }
+
+      let body = {
+        status_pembayaran,
+      };
+
+      const dataDiklat = await Diklat.findOne({
+        where: {
+          id: dataPesertaDiklat.DiklatId,
+        },
+      });
+
+      if (dataDiklat.jumlah_peserta >= dataDiklat.kuota) {
+        throw {
+          name: "Maaf Kuota Diklat Sudah Penuh",
+          diklat: `${dataDiklat.tema}`,
+        };
+      }
+
+      await PesertaDiklat.update(body, {
+        where: {
+          id,
+        },
+      });
+
+      if (dataPesertaDiklat.status_pembayaran !== "SUDAH_DIBAYAR") {
+        await Diklat.update(
+          {
+            jumlah_peserta: sequelize.literal(`jumlah_peserta + 1`),
+          },
+          {
+            where: {
+              id: dataPesertaDiklat.DiklatId,
+            },
+          }
+        );
+      }
+
+      res.status(200).json({
+        statusCode: 200,
+        message: "Berhasil Memperbaharui Status Peserta Diklat",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   // DELETE
   static async delete(req, res, next) {
     try {
@@ -187,6 +267,8 @@ class Controller {
       if (!dataPesertaDiklat) {
         throw { name: "Id Peserta Diklat Tidak Ditemukan" };
       }
+
+      remove(dataPesertaDiklat.file_bukti_pembayaran);
 
       await PesertaDiklat.destroy({
         where: {

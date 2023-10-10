@@ -42,6 +42,9 @@ const handleError = (err, req, res, next) => {
   } else if (err.name === "Maaf Kuota Kelas Tahsin Sudah Penuh") {
     code = 400;
     message = `Maaf Kuota Kelas Tahsin ${err.kelas} Sudah Penuh`;
+  } else if (err.name === "Mohon Bersabar, Data Kamu Lagi Diproses") {
+    code = 400;
+    message = "Mohon Bersabar, Data Kamu Lagi Diproses";
   }
 
   // 404

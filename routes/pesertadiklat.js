@@ -8,19 +8,29 @@ const pesertaDiklatRouter = require("express").Router();
 const file = upload();
 
 pesertaDiklatRouter.get("/", ApiKey, Controller.getAll);
+
 pesertaDiklatRouter.get("/:id", ApiKey, Controller.getOne);
+
 pesertaDiklatRouter.post(
   "/",
   file.single("file_bukti_pembayaran"),
   authentication,
   Controller.craete
 );
+
 pesertaDiklatRouter.patch(
   "/:id",
   file.single("file_bukti_pembayaran"),
   authentication,
   Controller.update
 );
+
+pesertaDiklatRouter.patch(
+  "/status/:id",
+  authentication,
+  Controller.updateStatus
+);
+
 pesertaDiklatRouter.delete("/:id", authentication, Controller.delete);
 
 module.exports = pesertaDiklatRouter;
