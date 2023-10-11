@@ -10,7 +10,7 @@ const file = upload();
 kajianRouter.get("/rutin", ApiKey, Controller.getAllRutin);
 kajianRouter.get("/tablighAkbar", ApiKey, Controller.getAllTablighAkbar);
 
-kajianRouter.get("/:id", authentication, Controller.getOne);
+kajianRouter.get("/:id", ApiKey, Controller.getOne);
 
 kajianRouter.post(
   "/",
@@ -25,6 +25,8 @@ kajianRouter.patch(
   authentication,
   Controller.update
 );
+
+kajianRouter.patch("/link/:id", authentication, Controller.updateLink);
 
 kajianRouter.delete("/:id", authentication, Controller.delete);
 

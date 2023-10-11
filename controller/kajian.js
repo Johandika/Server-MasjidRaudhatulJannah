@@ -60,7 +60,7 @@ class Controller {
 
       res.status(200).json({
         statusCode: 200,
-        message: "Berhasil Mendapatkan Semua Data Kajian",
+        message: "Berhasil Mendapatkan Semua Data Kajian Rutin",
         data: dataKajian.rows,
         totaldataKajian: dataKajian.count,
         totalPage: totalPage,
@@ -128,7 +128,7 @@ class Controller {
 
       res.status(200).json({
         statusCode: 200,
-        message: "Berhasil Mendapatkan Semua Data Kajian",
+        message: "Berhasil Mendapatkan Semua Data Kajian Tabligh Akbar",
         data: dataKajian.rows,
         totaldataKajian: dataKajian.count,
         totalPage: totalPage,
@@ -195,7 +195,7 @@ class Controller {
         tipe,
         nama_ustadz,
         nama_penerjemah,
-        waktu: waktu ? waktu : null,
+        waktu: waktu ? waktu : new Date(),
         tema,
         catatan,
         informasi,
@@ -355,6 +355,32 @@ class Controller {
       res.status(200).json({
         statusCode: 200,
         message: "Berhasil Memperbaharui Data Kajian",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // UPDATE LINK
+  static async updateLink(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { link } = req.body;
+
+      await Kajian.update(
+        {
+          link,
+        },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+
+      res.status(200).json({
+        statusCode: 200,
+        message: "Berhasil Memperbaharui Link Kajian",
       });
     } catch (error) {
       next(error);
