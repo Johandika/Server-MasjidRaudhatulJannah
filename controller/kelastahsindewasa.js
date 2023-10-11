@@ -10,7 +10,7 @@ class Controller {
   // GET ALL
   static async getAll(req, res, next) {
     try {
-      const { limit, page, search, tanggal, status } = req.query;
+      const { limit, page, search, tanggal, status, tipe_kelas } = req.query;
 
       let pagination = {
         include: [
@@ -28,6 +28,11 @@ class Controller {
         pagination.limit = limit;
       }
 
+      if (tipe_kelas) {
+        pagination.where = {
+          tipe_kelas: tipe_kelas,
+        };
+      }
       if (page && limit) {
         pagination.offset = (page - 1) * limit;
       }
@@ -104,7 +109,8 @@ class Controller {
   // CREATE
   static async craete(req, res, next) {
     try {
-      const { kelas, hari, catatan, kuota, PengajarTahsinId } = req.body;
+      const { kelas, hari, catatan, kuota, tipe_kelas, PengajarTahsinId } =
+        req.body;
 
       let body = {
         kelas,
@@ -146,7 +152,8 @@ class Controller {
   static async update(req, res, next) {
     try {
       const { id } = req.params;
-      const { kelas, catatan, kuota, PengajarTahsinId, hari } = req.body;
+      const { kelas, catatan, kuota, tipe_kelas, PengajarTahsinId, hari } =
+        req.body;
 
       const dataKelasTahsinDewasa = await KelasTahsinDewasa.findOne({
         where: {
