@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
       Kajian.hasOne(models.Jadwal, {
         foreignKey: "KajianId",
       });
+
+      Kajian.hasOne(models.LinkKajianRutin, {
+        foreignKey: "KajianId",
+      });
     }
   }
   Kajian.init(

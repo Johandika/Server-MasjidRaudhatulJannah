@@ -99,13 +99,12 @@ const handleError = (err, req, res, next) => {
   } else if (err.name === "Id Layanan Tidak Ditemukan") {
     code = 404;
     message = "Id Layanan Tidak Ditemukan";
+  } else if (err.name === "Id Link Kajian Tidak Ditemukan") {
+    code = 404;
+    message = "Id Link Kajian Tidak Ditemukan";
   }
-
   //
   else if (err.name === "Id Ustadz Tidak Ditemukan") {
-    code = 404;
-    message = "Id Ustadz Tidak Ditemukan";
-  } else if (err.name === "Id Ustadz Tidak Ditemukan") {
     code = 404;
     message = "Id Ustadz Tidak Ditemukan";
   } else if (err.name === "Id Ustadz Tidak Ditemukan") {
