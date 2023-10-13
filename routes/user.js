@@ -8,9 +8,9 @@ userRouter.get("/", authentication, Controller.getAllUser);
 
 userRouter.get("/:id", authentication, Controller.getOneUser);
 
-userRouter.post("/register", ApiKey, Controller.register);
+userRouter.post("/register", Controller.register);
 
-userRouter.post("/login", ApiKey, Controller.login);
+userRouter.post("/login", Controller.login);
 
 userRouter.patch("/:id", authentication, Controller.updateUser);
 
