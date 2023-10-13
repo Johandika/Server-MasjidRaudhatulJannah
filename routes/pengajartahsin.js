@@ -12,6 +12,12 @@ pengajartahsinRouter.post("/", authentication, Controller.craete);
 
 pengajartahsinRouter.patch("/:id", authentication, Controller.update);
 
+pengajartahsinRouter.patch(
+  "/status/:id",
+  authentication,
+  Controller.updateStatusAktif
+);
+
 pengajartahsinRouter.delete("/:id", authentication, Controller.delete);
 
 module.exports = pengajartahsinRouter;

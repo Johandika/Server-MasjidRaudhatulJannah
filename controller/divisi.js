@@ -165,6 +165,40 @@ class Controller {
     }
   }
 
+  // UPDATE STATUS AKTIF
+  static async updateStatusAktif(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { status_aktif } = req.body;
+
+      const dataDivisi = await Divisi.findOne({
+        where: {
+          id,
+        },
+      });
+
+      if (!dataDivisi) {
+        throw { name: "Id Divisi Tidak Ditemukan" };
+      }
+
+      await Divisi.update(
+        { status_aktif },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+
+      res.status(200).json({
+        statusCode: 200,
+        message: "Berhasil Memperbaharui Status Aktif Divisi",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   // DELETE
   static async delete(req, res, next) {
     try {

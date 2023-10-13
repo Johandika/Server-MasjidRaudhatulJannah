@@ -25,6 +25,8 @@ diklatRouter.patch(
   Controller.update
 );
 
+diklatRouter.patch("/status/:id", authentication, Controller.updateStatusAktif);
+
 diklatRouter.delete("/:id", authentication, Controller.delete);
 
 module.exports = diklatRouter;

@@ -171,6 +171,40 @@ class Controller {
     }
   }
 
+  // UPDATE STATUS AKTIF
+  static async updateStatusAktif(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { status_aktif } = req.body;
+
+      const dataUstadz = await Ustadz.findOne({
+        where: {
+          id,
+        },
+      });
+
+      if (!dataUstadz) {
+        throw { name: "Id Ustadz Tidak Ditemukan" };
+      }
+
+      await Ustadz.update(
+        { status_aktif },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+
+      res.status(200).json({
+        statusCode: 200,
+        message: "Berhasil Memperbaharui Status Aktif Ustadz",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   // DELETE
   static async delete(req, res, next) {
     try {

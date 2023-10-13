@@ -12,6 +12,12 @@ pesertaTahsinAnakRouter.post("/", authentication, Controller.craete);
 
 pesertaTahsinAnakRouter.patch("/:id", authentication, Controller.update);
 
+pesertaTahsinAnakRouter.patch(
+  "/status/:id",
+  authentication,
+  Controller.updateStatusAktif
+);
+
 pesertaTahsinAnakRouter.delete("/:id", authentication, Controller.delete);
 
 module.exports = pesertaTahsinAnakRouter;

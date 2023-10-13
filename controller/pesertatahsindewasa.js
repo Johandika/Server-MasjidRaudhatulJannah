@@ -236,6 +236,40 @@ class Controller {
     }
   }
 
+  // UPDATE STATUS AKTIF
+  static async updateStatusAktif(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { status_aktif } = req.body;
+
+      const dataPesertaTahsinDewasa = await PesertaTahsinDewasa.findOne({
+        where: {
+          id,
+        },
+      });
+
+      if (!dataPesertaTahsinDewasa) {
+        throw { name: "Id Peserta Tahsin Dewasa Tidak Ditemukan" };
+      }
+
+      await PesertaTahsinDewasa.update(
+        { status_aktif },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+
+      res.status(200).json({
+        statusCode: 200,
+        message: "Berhasil Memperbaharui Status Aktif Peserta Tahsin Dewasa",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   // DELETE
   static async delete(req, res, next) {
     try {

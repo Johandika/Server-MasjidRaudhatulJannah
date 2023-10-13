@@ -10,7 +10,7 @@ rekeningRouter.get("/:id", ApiKey, Controller.getOne);
 
 rekeningRouter.post("/", authentication, Controller.craete);
 
-rekeningRouter.patch("/:id", authentication, Controller.update);
+rekeningRouter.patch("/:id", authentication, Controller.updateStatusAktif);
 
 rekeningRouter.delete("/:id", authentication, Controller.delete);
 

@@ -154,6 +154,40 @@ class Controller {
     }
   }
 
+  // UPDATE STATUS AKTIF
+  static async updateStatusAktif(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { status_aktif } = req.body;
+
+      const dataDiklat = await Diklat.findOne({
+        where: {
+          id,
+        },
+      });
+
+      if (!dataDiklat) {
+        throw { name: "Id Diklat Tidak Ditemukan" };
+      }
+
+      await Diklat.update(
+        { status_aktif },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+
+      res.status(200).json({
+        statusCode: 200,
+        message: "Berhasil Memperbaharui Status Aktif Diklat",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   // DELETE
   static async delete(req, res, next) {
     try {

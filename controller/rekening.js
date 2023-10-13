@@ -158,6 +158,40 @@ class Controller {
     }
   }
 
+  // UPDATE STATUS AKTIF
+  static async updateStatusAktif(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { status_aktif } = req.body;
+
+      const dataRekeningDonasi = await RekeningDonasi.findOne({
+        where: {
+          id,
+        },
+      });
+
+      if (!dataRekeningDonasi) {
+        throw { name: "Id Rekening Donasi Tidak Ditemukan" };
+      }
+
+      await RekeningDonasi.update(
+        { status_aktif },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+
+      res.status(200).json({
+        statusCode: 200,
+        message: "Berhasil Memperbaharui Status Aktif Rekening Donasi",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   // DELETE
   static async delete(req, res, next) {
     try {

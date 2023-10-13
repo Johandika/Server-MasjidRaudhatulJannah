@@ -211,6 +211,74 @@ class Controller {
     }
   }
 
+  // UPDATE STATUS AKTIF
+  static async updateStatusAktif(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { status_aktif } = req.body;
+
+      const dataKegiatan = await Kegiatan.findOne({
+        where: {
+          id,
+        },
+      });
+
+      if (!dataKegiatan) {
+        throw { name: "Id Kegiatan Tidak Ditemukan" };
+      }
+
+      await Kegiatan.update(
+        { status_aktif },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+
+      res.status(200).json({
+        statusCode: 200,
+        message: "Berhasil Memperbaharui Status Aktif Kegiatan",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // UPDATE STATUS AKTIF
+  static async updateHeadline(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { headline } = req.body;
+
+      const dataKegiatan = await Kegiatan.findOne({
+        where: {
+          id,
+        },
+      });
+
+      if (!dataKegiatan) {
+        throw { name: "Id Kegiatan Tidak Ditemukan" };
+      }
+
+      await Kegiatan.update(
+        { headline },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+
+      res.status(200).json({
+        statusCode: 200,
+        message: "Berhasil Memperbaharui Headline Kegiatan",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   // DELETE
   static async delete(req, res, next) {
     try {

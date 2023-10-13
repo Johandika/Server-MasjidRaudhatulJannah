@@ -26,6 +26,8 @@ kajianRouter.patch(
   Controller.update
 );
 
+kajianRouter.patch("/status/:id", authentication, Controller.updateStatusAktif);
+
 kajianRouter.patch("/link/:id", authentication, Controller.updateLink);
 
 kajianRouter.delete("/:id", authentication, Controller.delete);

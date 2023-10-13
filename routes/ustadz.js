@@ -12,6 +12,8 @@ ustadzRouter.post("/", authentication, Controller.craete);
 
 ustadzRouter.patch("/:id", authentication, Controller.update);
 
+ustadzRouter.patch("/:id", authentication, Controller.updateStatusAktif);
+
 ustadzRouter.delete("/:id", authentication, Controller.delete);
 
 module.exports = ustadzRouter;

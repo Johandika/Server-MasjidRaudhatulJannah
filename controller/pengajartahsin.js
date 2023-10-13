@@ -166,6 +166,40 @@ class Controller {
     }
   }
 
+  // UPDATE STATUS AKTIF
+  static async updateStatusAktif(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { status_aktif } = req.body;
+
+      const dataPengajarTahsin = await PengajarTahsin.findOne({
+        where: {
+          id,
+        },
+      });
+
+      if (!dataPengajarTahsin) {
+        throw { name: "Id Pengajar Tahsin Tidak Ditemukan" };
+      }
+
+      await PengajarTahsin.update(
+        { status_aktif },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+
+      res.status(200).json({
+        statusCode: 200,
+        message: "Berhasil Memperbaharui Status Aktif Pengajar Tahsin",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   // DELETE
   static async delete(req, res, next) {
     try {

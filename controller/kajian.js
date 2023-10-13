@@ -361,6 +361,40 @@ class Controller {
     }
   }
 
+  // UPDATE STATUS AKTIF
+  static async updateStatusAktif(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { status_aktif } = req.body;
+
+      const dataKajian = await Kajian.findOne({
+        where: {
+          id,
+        },
+      });
+
+      if (!dataKajian) {
+        throw { name: "Id Kajian Tidak Ditemukan" };
+      }
+
+      await Kajian.update(
+        { status_aktif },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+
+      res.status(200).json({
+        statusCode: 200,
+        message: "Berhasil Memperbaharui Status Aktif Kajian",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   // UPDATE LINK
   static async updateLink(req, res, next) {
     try {

@@ -192,8 +192,8 @@ class Controller {
     }
   }
 
-  // UPDATE STATUS
-  static async updateStatus(req, res, next) {
+  // UPDATE STATUS PEMBAYARAN
+  static async updateStatusPembayaran(req, res, next) {
     try {
       const { id } = req.params;
       const { status_pembayaran } = req.body;
@@ -247,6 +247,40 @@ class Controller {
       res.status(200).json({
         statusCode: 200,
         message: "Berhasil Memperbaharui Status Peserta Diklat",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // UPDATE STATUS AKTIF
+  static async updateStatusAktif(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { status_aktif } = req.body;
+
+      const dataPesertaDiklat = await PesertaDiklat.findOne({
+        where: {
+          id,
+        },
+      });
+
+      if (!dataPesertaDiklat) {
+        throw { name: "Id Peserta Diklat Tidak Ditemukan" };
+      }
+
+      await PesertaDiklat.update(
+        { status_aktif },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+
+      res.status(200).json({
+        statusCode: 200,
+        message: "Berhasil Memperbaharui Status Aktif Peserta Diklat",
       });
     } catch (error) {
       next(error);

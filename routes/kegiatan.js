@@ -15,12 +15,26 @@ kegiatanRouter.post(
   authentication,
   Controller.craete
 );
+
 kegiatanRouter.patch(
   "/:id",
   file.single("gambar_kegiatan"),
   authentication,
   Controller.update
 );
+
+kegiatanRouter.patch(
+  "/status/:id",
+  authentication,
+  Controller.updateStatusAktif
+);
+
+kegiatanRouter.patch(
+  "/headline/:id",
+  authentication,
+  Controller.updateHeadline
+);
+
 kegiatanRouter.delete("/:id", authentication, Controller.delete);
 
 module.exports = kegiatanRouter;

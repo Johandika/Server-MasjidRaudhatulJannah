@@ -12,6 +12,12 @@ pesertaTahsinDewasaRouter.post("/", authentication, Controller.craete);
 
 pesertaTahsinDewasaRouter.patch("/:id", authentication, Controller.update);
 
+pesertaTahsinDewasaRouter.patch(
+  "/status/:id",
+  authentication,
+  Controller.updateStatusAktif
+);
+
 pesertaTahsinDewasaRouter.delete("/:id", authentication, Controller.delete);
 
 module.exports = pesertaTahsinDewasaRouter;

@@ -26,9 +26,15 @@ pesertaDiklatRouter.patch(
 );
 
 pesertaDiklatRouter.patch(
+  "/pembayaran/:id",
+  authentication,
+  Controller.updateStatusPembayaran
+);
+
+pesertaDiklatRouter.patch(
   "/status/:id",
   authentication,
-  Controller.updateStatus
+  Controller.updateStatusAktif
 );
 
 pesertaDiklatRouter.delete("/:id", authentication, Controller.delete);

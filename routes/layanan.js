@@ -24,6 +24,12 @@ layananRouter.patch(
   Controller.update
 );
 
+layananRouter.patch(
+  "/status/:id",
+  authentication,
+  Controller.updateStatusAktif
+);
+
 layananRouter.delete("/:id", authentication, Controller.delete);
 
 module.exports = layananRouter;

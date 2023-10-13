@@ -12,6 +12,12 @@ kelasTahsinDewasaDewasa.post("/", authentication, Controller.craete);
 
 kelasTahsinDewasaDewasa.patch("/:id", authentication, Controller.update);
 
+kelasTahsinDewasaDewasa.patch(
+  "/status/:id",
+  authentication,
+  Controller.updateStatusAktif
+);
+
 kelasTahsinDewasaDewasa.delete("/:id", authentication, Controller.delete);
 
 module.exports = kelasTahsinDewasaDewasa;
