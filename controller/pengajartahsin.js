@@ -117,8 +117,8 @@ class Controller {
 
       const dataPengajarTahsin = await PengajarTahsin.create(body);
 
-      res.status(200).json({
-        statusCode: 200,
+      res.status(201).json({
+        statusCode: 201,
         message: "Berhasil Menambahkan Data Pengajar Tahsin",
         data: dataPengajarTahsin,
       });

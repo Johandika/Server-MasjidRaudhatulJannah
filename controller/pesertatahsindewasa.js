@@ -164,8 +164,8 @@ class Controller {
         }
       );
 
-      res.status(200).json({
-        statusCode: 200,
+      res.status(201).json({
+        statusCode: 201,
         message: "Berhasil Menambahkan Data Peserta Tahsin Dewasa",
         data: dataPesertaTahsinDewasa,
       });
