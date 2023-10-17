@@ -15,7 +15,7 @@ pesertaDiklatRouter.post(
   "/",
   file.single("file_bukti_pembayaran"),
   authentication,
-  Controller.craete
+  Controller.create
 );
 
 pesertaDiklatRouter.patch(

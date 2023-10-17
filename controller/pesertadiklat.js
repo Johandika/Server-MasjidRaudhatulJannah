@@ -83,7 +83,7 @@ class Controller {
   }
 
   // CREATE
-  static async craete(req, res, next) {
+  static async create(req, res, next) {
     try {
       const { nama, telepon, alamat, pekerjaan, umur, DiklatId } = req.body;
 
