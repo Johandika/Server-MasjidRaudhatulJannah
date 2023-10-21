@@ -83,7 +83,16 @@ class Controller {
   // CREATE
   static async craete(req, res, next) {
     try {
-      const { tema, waktu, pemateri, biaya, catatan, kuota } = req.body;
+      const {
+        tema,
+        waktu,
+        pemateri,
+        biaya,
+        catatan,
+        kuota,
+        lokasi,
+        fasilitas,
+      } = req.body;
 
       const dataDiklat = await Diklat.create({
         tema,
