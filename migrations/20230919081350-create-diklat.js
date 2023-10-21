@@ -19,6 +19,12 @@ module.exports = {
       tema: {
         type: Sequelize.STRING,
       },
+      lokasi: {
+        type: Sequelize.STRING,
+      },
+      fasilitas: {
+        type: Sequelize.STRING,
+      },
       waktu: {
         type: Sequelize.DATE,
       },

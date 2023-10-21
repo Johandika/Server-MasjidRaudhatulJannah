@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
   Diklat.init(
     {
       tema: DataTypes.STRING,
+      lokasi: DataTypes.STRING,
+      fasilitas: DataTypes.STRING,
       waktu: DataTypes.DATE,
       pemateri: DataTypes.STRING,
       biaya: DataTypes.FLOAT,

@@ -89,6 +89,8 @@ class Controller {
         tema,
         waktu: waktu ? waktu : null,
         pemateri,
+        lokasi,
+        fasilitas,
         biaya,
         catatan,
         kuota,
@@ -111,8 +113,17 @@ class Controller {
   static async update(req, res, next) {
     try {
       const { id } = req.params;
-      const { tema, waktu, pemateri, jumlah_peserta, biaya, catatan, kuota } =
-        req.body;
+      const {
+        tema,
+        waktu,
+        pemateri,
+        jumlah_peserta,
+        biaya,
+        catatan,
+        kuota,
+        lokasi,
+        fasilitas,
+      } = req.body;
 
       const dataDiklat = await Diklat.findOne({
         where: {
@@ -130,6 +141,8 @@ class Controller {
         pemateri,
         jumlah_peserta,
         biaya,
+        fasilitas,
+        lokasi,
         catatan,
         kuota,
       };
