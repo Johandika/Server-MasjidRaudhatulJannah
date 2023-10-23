@@ -20,6 +20,9 @@ class Controller {
           {
             model: Jadwal,
           },
+          {
+            model: PesertaTahsinDewasa,
+          },
         ],
         order: [["kelas", "ASC"]],
       };
@@ -89,6 +92,9 @@ class Controller {
           {
             model: Jadwal,
           },
+          {
+            model: PesertaTahsinDewasa, // Tambahkan ini untuk menyertakan data peserta
+          },
         ],
       });
 
@@ -115,6 +121,7 @@ class Controller {
       let body = {
         kelas,
         catatan,
+        tipe_kelas,
         kuota: ValidateNumber(kuota),
       };
 

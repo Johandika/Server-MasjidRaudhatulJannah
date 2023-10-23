@@ -20,6 +20,9 @@ class Controller {
           {
             model: Jadwal,
           },
+          {
+            model: PesertaTahsinAnak,
+          },
         ],
         order: [["kelas", "ASC"]],
       };
