@@ -34,8 +34,8 @@ module.exports = {
       catatan: {
         type: Sequelize.STRING,
       },
-      informasi: {
-        type: Sequelize.TEXT,
+      waktu_kajian_rutin: {
+        type: Sequelize.STRING,
       },
       status_aktif: {
         type: Sequelize.BOOLEAN,

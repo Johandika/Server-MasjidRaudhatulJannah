@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       waktu: DataTypes.DATE,
       tema: DataTypes.STRING,
       catatan: DataTypes.STRING,
-      informasi: DataTypes.TEXT,
+      waktu_kajian_rutin: DataTypes.STRING,
       status_aktif: DataTypes.BOOLEAN,
       link: DataTypes.TEXT,
       poster_kajian: DataTypes.STRING,
