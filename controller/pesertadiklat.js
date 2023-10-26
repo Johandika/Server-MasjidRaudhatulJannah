@@ -2,6 +2,7 @@ const { Op, literal } = require("sequelize");
 const formatPhoneNumber = require("../helper/formatPhoneNumber");
 const remove = require("../helper/removeFile");
 const { PesertaDiklat, Diklat, sequelize, Sequelize } = require("../models");
+const moment = require("moment");
 
 class Controller {
   // GET ALL

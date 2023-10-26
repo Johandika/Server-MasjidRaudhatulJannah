@@ -1,6 +1,14 @@
 const formatPhoneNumber = require("../helper/formatPhoneNumber");
 const ValidateNumber = require("../helper/validateNumber");
-const { Ustadz, Kajian, KategoriKajian, Jadwal } = require("../models");
+const {
+  Ustadz,
+  Kajian,
+  KategoriKajian,
+  Jadwal,
+  Sequelize,
+} = require("../models");
+const moment = require("moment");
+const { Op } = require("sequelize");
 
 class Controller {
   // GET ALL

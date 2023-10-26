@@ -1,5 +1,12 @@
-const { KategoriKajian, Kajian, Jadwal, Ustadz } = require("../models");
-
+const {
+  KategoriKajian,
+  Kajian,
+  Jadwal,
+  Ustadz,
+  Sequelize,
+} = require("../models");
+const moment = require("moment");
+const { Op } = require("sequelize");
 class Controller {
   // GET ALL
   static async getAll(req, res, next) {

@@ -4,7 +4,9 @@ const {
   createAccessToken,
   hashingPassword,
 } = require("../helper/helper");
-const { User } = require("../models");
+const { User, Sequelize } = require("../models");
+const moment = require("moment");
+const { Op } = require("sequelize");
 
 class Controller {
   // GET ALL USERS

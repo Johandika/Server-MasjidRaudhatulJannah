@@ -1,5 +1,13 @@
 const remove = require("../helper/removeFile");
-const { Kajian, KategoriKajian, Jadwal, Ustadz } = require("../models");
+const {
+  Kajian,
+  KategoriKajian,
+  Jadwal,
+  Ustadz,
+  Sequelize,
+} = require("../models");
+const moment = require("moment");
+const { Op } = require("sequelize");
 
 class Controller {
   // GET ALL RUTIN

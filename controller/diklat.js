@@ -1,5 +1,7 @@
 const remove = require("../helper/removeFile");
-const { Diklat } = require("../models");
+const { Diklat, Sequelize } = require("../models");
+const moment = require("moment");
+const { Op } = require("sequelize");
 
 class Controller {
   // GET ALL

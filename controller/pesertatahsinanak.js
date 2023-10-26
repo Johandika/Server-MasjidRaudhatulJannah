@@ -7,7 +7,10 @@ const {
   Jadwal,
   PengajarTahsin,
   sequelize,
+  Sequelize,
 } = require("../models");
+const moment = require("moment");
+const { Op } = require("sequelize");
 
 class Controller {
   // GET ALL
