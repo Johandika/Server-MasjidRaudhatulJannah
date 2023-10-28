@@ -16,7 +16,11 @@ class Controller {
       const { limit, page, search, tanggal, status } = req.query;
 
       let pagination = {
-        include: [],
+        include: [
+          {
+            model: RekeningDonasi,
+          },
+        ],
         order: [["createdAt", "DESC"]],
       };
 
@@ -72,6 +76,11 @@ class Controller {
         where: {
           id,
         },
+        include: [
+          {
+            model: RekeningDonasi,
+          },
+        ],
       });
 
       if (!dataUangMasuk) {
