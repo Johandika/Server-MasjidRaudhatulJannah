@@ -179,6 +179,7 @@ class Controller {
         kelas,
         catatan,
         kuota: ValidateNumber(kuota),
+        tipe_kelas,
       };
 
       if (PengajarTahsinId) {
