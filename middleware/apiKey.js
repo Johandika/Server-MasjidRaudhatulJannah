@@ -1,8 +1,8 @@
 const ApiKey = async (req, res, next) => {
   try {
-    const { apikey } = req.headers;
+    const { api_key } = req.headers;
 
-    if (apikey !== process.env.API_KEY) {
+    if (api_key !== process.env.API_KEY) {
       throw { name: "Api Key Tidak Valid" };
     }
 
