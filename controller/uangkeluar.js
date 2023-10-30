@@ -12,7 +12,7 @@ class Controller {
   // GET ALL
   static async getAll(req, res, next) {
     try {
-      const { limit, page, search, tanggal, status } = req.query;
+      const { limit, page, search, tanggal, status, RekeningId } = req.query;
 
       let pagination = {
         include: [
@@ -20,7 +20,7 @@ class Controller {
             model: RekeningDonasi,
           },
         ],
-        order: [["createdAt", "DESC"]],
+        order: [["waktu", "DESC"]],
       };
 
       if (limit) {
@@ -29,6 +29,12 @@ class Controller {
 
       if (page && limit) {
         pagination.offset = (page - 1) * limit;
+      }
+
+      if (RekeningId) {
+        pagination.where = {
+          RekeningDonasiId: RekeningId,
+        };
       }
 
       if (search) {
