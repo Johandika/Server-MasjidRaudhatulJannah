@@ -155,9 +155,9 @@ class Controller {
   // CREATE
   static async create(req, res, next) {
     try {
-      const { sub_tema, link_kajian, KajianId } = req.body;
+      const { sub_tema, waktu, link_kajian, KajianId } = req.body;
 
-      let body = { sub_tema, link_kajian };
+      let body = { sub_tema, waktu: waktu ? waktu : new Date(), link_kajian };
 
       if (KajianId) {
         const data = await Kajian.findOne({
@@ -188,7 +188,7 @@ class Controller {
     try {
       const { id } = req.params;
 
-      const { sub_tema, link_kajian } = req.body;
+      const { sub_tema, waktu, link_kajian } = req.body;
 
       const dataLinkKajianRutin = await LinkKajianRutin.findOne({
         where: {
@@ -200,7 +200,7 @@ class Controller {
         throw { name: "Id Link Kajian Tidak Ditemukan" };
       }
 
-      let body = { sub_tema, link_kajian };
+      let body = { sub_tema, waktu, link_kajian };
 
       await LinkKajianRutin.update(body, {
         where: {

@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sub_tema: DataTypes.STRING,
       link_kajian: DataTypes.TEXT,
+      waktu: DataTypes.DATE,
       KajianId: DataTypes.UUID,
     },
     {
