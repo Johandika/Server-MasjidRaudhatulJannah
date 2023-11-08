@@ -203,7 +203,7 @@ class Controller {
         tipe,
         nama_ustadz,
         nama_penerjemah,
-        waktu: waktu ? waktu : new Date(),
+        waktu: waktu ? waktu : null,
         tema,
         catatan,
         waktu_kajian_rutin,

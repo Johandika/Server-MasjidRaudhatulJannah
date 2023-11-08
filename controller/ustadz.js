@@ -20,14 +20,14 @@ class Controller {
         include: [
           {
             model: Kajian,
-            include: [
-              {
-                model: KategoriKajian,
-              },
-              {
-                model: Jadwal,
-              },
-            ],
+            // include: [
+            //   {
+            //     model: KategoriKajian,
+            //   },
+            //   {
+            //     model: Jadwal,
+            //   },
+            // ],
           },
         ],
         order: [["createdAt", "DESC"]],
@@ -88,14 +88,14 @@ class Controller {
         include: [
           {
             model: Kajian,
-            include: [
-              {
-                model: KategoriKajian,
-              },
-              {
-                model: Jadwal,
-              },
-            ],
+            // include: [
+            //   {
+            //     model: KategoriKajian,
+            //   },
+            //   {
+            //     model: Jadwal,
+            //   },
+            // ],
           },
         ],
       });

@@ -65,6 +65,11 @@ class Controller {
         where: {
           id,
         },
+        include: [
+          {
+            model: Divisi,
+          },
+        ],
       });
 
       if (!dataLayanan) {

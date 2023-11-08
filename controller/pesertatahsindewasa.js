@@ -17,7 +17,7 @@ class Controller {
   // GET ALL
   static async getAll(req, res, next) {
     try {
-      const { limit, page, search, tanggal, status } = req.query;
+      const { limit, page, search, tanggal, status, tipe } = req.query;
 
       let pagination = {
         include: [
@@ -38,6 +38,12 @@ class Controller {
 
       if (limit) {
         pagination.limit = limit;
+      }
+
+      if (tipe) {
+        pagination.where = {
+          tipe: tipe,
+        };
       }
 
       if (page && limit) {

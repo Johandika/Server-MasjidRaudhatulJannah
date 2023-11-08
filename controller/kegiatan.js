@@ -7,12 +7,22 @@ class Controller {
   // GET ALL
   static async getAll(req, res, next) {
     try {
-      const { limit, page, search, tanggal, status } = req.query;
+      const { limit, page, search, tanggal, status, headline } = req.query;
 
       let pagination = {
-        include: [],
+        include: [
+          {
+            model: Divisi,
+          },
+        ],
         order: [["createdAt", "DESC"]],
       };
+
+      if (headline) {
+        pagination.where = {
+          headline: true,
+        };
+      }
 
       if (limit) {
         pagination.limit = limit;
@@ -66,6 +76,11 @@ class Controller {
         where: {
           id,
         },
+        include: [
+          {
+            model: Divisi,
+          },
+        ],
       });
 
       if (!dataKegiatan) {

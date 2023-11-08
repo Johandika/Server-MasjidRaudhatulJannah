@@ -15,17 +15,17 @@ class Controller {
 
       let pagination = {
         include: [
-          {
-            model: Kajian,
-            include: [
-              {
-                model: Jadwal,
-              },
-              {
-                model: Ustadz,
-              },
-            ],
-          },
+          // {
+          //   model: Kajian,
+          //   include: [
+          //     {
+          //       model: Jadwal,
+          //     },
+          //     {
+          //       model: Ustadz,
+          //     },
+          //   ],
+          // },
         ],
         order: [["nama", "ASC"]],
       };
@@ -81,19 +81,19 @@ class Controller {
         where: {
           id,
         },
-        include: [
-          {
-            model: Kajian,
-            include: [
-              {
-                model: Jadwal,
-              },
-              {
-                model: Ustadz,
-              },
-            ],
-          },
-        ],
+        // include: [
+        //   {
+        //     model: Kajian,
+        //     include: [
+        //       {
+        //         model: Jadwal,
+        //       },
+        //       {
+        //         model: Ustadz,
+        //       },
+        //     ],
+        //   },
+        // ],
       });
 
       if (!dataKategoriKajian) {

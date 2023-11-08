@@ -1,6 +1,12 @@
 const moment = require("moment");
 const { Op } = require("sequelize");
-const { LinkKajianRutin, Kajian, Sequelize } = require("../models");
+const {
+  LinkKajianRutin,
+  Kajian,
+  Sequelize,
+  Ustadz,
+  KategoriKajian,
+} = require("../models");
 
 class Controller {
   // GET ALL
@@ -9,6 +15,11 @@ class Controller {
       const { limit, page, search, tanggal, status } = req.query;
 
       let pagination = {
+        include: [
+          {
+            model: Kajian,
+          },
+        ],
         order: [["createdAt", "DESC"]],
       };
 
@@ -63,6 +74,19 @@ class Controller {
       const { limit, page, search, tanggal, status } = req.query;
 
       let pagination = {
+        include: [
+          {
+            model: Kajian,
+            include: [
+              {
+                model: Ustadz,
+              },
+              {
+                model: KategoriKajian,
+              },
+            ],
+          },
+        ],
         order: [["createdAt", "DESC"]],
       };
 

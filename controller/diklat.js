@@ -1,5 +1,5 @@
 const remove = require("../helper/removeFile");
-const { Diklat, Sequelize } = require("../models");
+const { Diklat, Sequelize, PesertaDiklat } = require("../models");
 const moment = require("moment");
 const { Op } = require("sequelize");
 
@@ -10,7 +10,12 @@ class Controller {
       const { limit, page, search, tanggal, status } = req.query;
 
       let pagination = {
-        include: [],
+        include: [
+          {
+            model: PesertaDiklat,
+          },
+        ],
+
         order: [["createdAt", "DESC"]],
       };
 
