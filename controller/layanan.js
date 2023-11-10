@@ -102,7 +102,7 @@ class Controller {
       let body = {
         title,
         sub_title,
-        waktu: waktu ? waktu : new Date(),
+        waktu: waktu ? waktu : null,
         lokasi,
         informasi,
         deskripsi,
@@ -162,7 +162,7 @@ class Controller {
       let body = {
         title,
         sub_title,
-        waktu: waktu ? waktu : new Date(),
+        waktu: waktu ? waktu : null,
         lokasi,
         informasi,
         deskripsi,

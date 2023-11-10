@@ -18,6 +18,11 @@ class Controller {
         include: [
           {
             model: Kajian,
+            include: [
+              {
+                model: Ustadz,
+              },
+            ],
           },
         ],
         order: [["createdAt", "DESC"]],
