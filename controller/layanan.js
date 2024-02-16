@@ -1,12 +1,12 @@
-const remove = require("../helper/removeFile");
-const { Layanan, Divisi, Sequelize } = require("../models");
-const moment = require("moment");
-const { Op } = require("sequelize");
+const remove = require('../helper/removeFile')
+const { Layanan, Divisi, Sequelize } = require('../models')
+const moment = require('moment')
+const { Op } = require('sequelize')
 class Controller {
   // GET ALL
   static async getAll(req, res, next) {
     try {
-      const { limit, page, search, tanggal, status } = req.query;
+      const { limit, page, search, tanggal, status } = req.query
 
       let pagination = {
         include: [
@@ -14,53 +14,53 @@ class Controller {
             model: Divisi,
           },
         ],
-        order: [["createdAt", "DESC"]],
-      };
+        order: [['createdAt', 'DESC']],
+      }
 
       if (limit) {
-        pagination.limit = limit;
+        pagination.limit = limit
       }
 
       if (page && limit) {
-        pagination.offset = (page - 1) * limit;
+        pagination.offset = (page - 1) * limit
       }
 
       if (search) {
         pagination.where = {
           [Op.or]: [{ title: { [Op.iLike]: `%${search}%` } }],
-        };
+        }
       }
 
       if (tanggal) {
-        const pagi = moment().format(`${tanggal} 00:00`);
-        const masuk = moment().format(`${tanggal} 23:59`);
+        const pagi = moment().format(`${tanggal} 00:00`)
+        const masuk = moment().format(`${tanggal} 23:59`)
         pagination.where = {
           createdAt: {
             [Op.between]: [pagi, masuk],
           },
-        };
+        }
       }
 
-      let dataLayanan = await Layanan.findAndCountAll(pagination);
+      let dataLayanan = await Layanan.findAndCountAll(pagination)
 
-      let totalPage = Math.ceil(dataLayanan.count / (limit ? limit : 50));
+      let totalPage = Math.ceil(dataLayanan.count / (limit ? limit : 50))
 
       res.status(200).json({
         statusCode: 200,
-        message: "Berhasil Mendapatkan Semua Data Layanan",
+        message: 'Berhasil Mendapatkan Semua Data Layanan',
         data: dataLayanan.rows,
         totaldataLayanan: dataLayanan.count,
         totalPage: totalPage,
-      });
+      })
     } catch (error) {
-      next(error);
+      next(error)
     }
   }
 
   // GET ONE
   static async getOne(req, res, next) {
     try {
-      const { id } = req.params;
+      const { id } = req.params
       const dataLayanan = await Layanan.findOne({
         where: {
           id,
@@ -70,18 +70,18 @@ class Controller {
             model: Divisi,
           },
         ],
-      });
+      })
 
       if (!dataLayanan) {
-        throw { name: "Id Layanan Tidak Ditemukan" };
+        throw { name: 'Id Layanan Tidak Ditemukan' }
       }
       res.status(200).json({
         statusCode: 200,
-        message: "Berhasil Menampailakan Data Layanan",
+        message: 'Berhasil Menampailakan Data Layanan',
         data: dataLayanan,
-      });
+      })
     } catch (error) {
-      next(error);
+      next(error)
     }
   }
 
@@ -97,7 +97,9 @@ class Controller {
         deskripsi,
         deskripsi_gambar,
         DivisiId,
-      } = req.body;
+      } = req.body
+
+      console.log(req.file)
 
       let body = {
         title,
@@ -106,38 +108,38 @@ class Controller {
         lokasi,
         informasi,
         deskripsi,
-        gambar_layanan: req.file ? req.file.path : "",
+        gambar_layanan: req.file ? req.file.path : '',
         deskripsi_gambar,
-      };
+      }
 
       if (DivisiId) {
         const dataDivisi = await Divisi.findOne({
           where: {
             id: DivisiId,
           },
-        });
+        })
         if (!dataDivisi) {
-          throw { name: "Id Divisi Tidak Ditemukan" };
+          throw { name: 'Id Divisi Tidak Ditemukan' }
         }
-        body.DivisiId = DivisiId;
+        body.DivisiId = DivisiId
       }
 
-      const dataLayanan = await Layanan.create(body);
+      const dataLayanan = await Layanan.create(body)
 
       res.status(201).json({
         statusCode: 201,
-        message: "Berhasil Membuat Data Layanan Baru",
+        message: 'Berhasil Membuat Data Layanan Baru',
         data: dataLayanan,
-      });
+      })
     } catch (error) {
-      next(error);
+      next(error)
     }
   }
 
   // UPDATE
   static async update(req, res, next) {
     try {
-      const { id } = req.params;
+      const { id } = req.params
       const {
         title,
         sub_title,
@@ -147,16 +149,16 @@ class Controller {
         deskripsi,
         deskripsi_gambar,
         DivisiId,
-      } = req.body;
+      } = req.body
 
       const dataLayanan = await Layanan.findOne({
         where: {
           id,
         },
-      });
+      })
 
       if (!dataLayanan) {
-        throw { name: "Id Layanan Tidak Ditemukan" };
+        throw { name: 'Id Layanan Tidak Ditemukan' }
       }
 
       let body = {
@@ -167,54 +169,54 @@ class Controller {
         informasi,
         deskripsi,
         deskripsi_gambar,
-      };
+      }
 
       if (DivisiId) {
         const dataDivisi = await Divisi.findOne({
           where: {
             id: DivisiId,
           },
-        });
+        })
         if (!dataDivisi) {
-          throw { name: "Id Divisi Tidak Ditemukan" };
+          throw { name: 'Id Divisi Tidak Ditemukan' }
         }
-        body.DivisiId = DivisiId;
+        body.DivisiId = DivisiId
       }
 
       if (req.file) {
-        remove(dataLayanan.gambar_layanan);
-        body.gambar_layanan = req.file ? req.file.path : "";
+        remove(dataLayanan.gambar_layanan)
+        body.gambar_layanan = req.file ? req.file.path : ''
       }
 
       await Layanan.update(body, {
         where: {
           id,
         },
-      });
+      })
 
       res.status(200).json({
         statusCode: 200,
-        message: "Berhasil Memperbaharui Data Layanan",
-      });
+        message: 'Berhasil Memperbaharui Data Layanan',
+      })
     } catch (error) {
-      next(error);
+      next(error)
     }
   }
 
   // UPDATE STATUS AKTIF
   static async updateStatusAktif(req, res, next) {
     try {
-      const { id } = req.params;
-      const { status_aktif } = req.body;
+      const { id } = req.params
+      const { status_aktif } = req.body
 
       const dataLayanan = await Layanan.findOne({
         where: {
           id,
         },
-      });
+      })
 
       if (!dataLayanan) {
-        throw { name: "Id Layanan Tidak Ditemukan" };
+        throw { name: 'Id Layanan Tidak Ditemukan' }
       }
 
       await Layanan.update(
@@ -223,46 +225,46 @@ class Controller {
           where: {
             id,
           },
-        }
-      );
+        },
+      )
 
       res.status(200).json({
         statusCode: 200,
-        message: "Berhasil Memperbaharui Status Aktif Layanan",
-      });
+        message: 'Berhasil Memperbaharui Status Aktif Layanan',
+      })
     } catch (error) {
-      next(error);
+      next(error)
     }
   }
 
   // DELETE
   static async delete(req, res, next) {
     try {
-      const { id } = req.params;
+      const { id } = req.params
       const dataLayanan = await Layanan.findOne({
         where: {
           id,
         },
-      });
+      })
 
       if (!dataLayanan) {
-        throw { name: "Id Layanan Tidak Ditemukan" };
+        throw { name: 'Id Layanan Tidak Ditemukan' }
       }
 
-      remove(dataLayanan.gambar_layanan);
+      remove(dataLayanan.gambar_layanan)
 
       await Layanan.destroy({
         where: {
           id: id,
         },
-      });
+      })
       res.status(200).json({
         statusCode: 200,
-        message: "Berhasil Menghapus Data Layanan",
-      });
+        message: 'Berhasil Menghapus Data Layanan',
+      })
     } catch (error) {
-      next(error);
+      next(error)
     }
   }
 }
-module.exports = Controller;
+module.exports = Controller

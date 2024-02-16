@@ -113,6 +113,8 @@ class Controller {
   // CREATE
   static async craete(req, res, next) {
     try {
+
+
       const { nama, catatan } = req.body;
 
       let body = {
